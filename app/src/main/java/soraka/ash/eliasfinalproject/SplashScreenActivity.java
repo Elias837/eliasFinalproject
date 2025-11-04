@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static final int SPLASH_DELAY = 2000; // 2 seconds
-    private TextView tv8;
+    private TextView tv2;
+    private ImageView iv1;
+    private ProgressBar pb1;
+    private TextView tv7;
 
 
 
@@ -22,18 +26,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        // Initialize views
-        ImageView logo = findViewById(R.id.logo);
-        TextView appName = findViewById(R.id.app_name);
-
-        // Load animations
-        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        Animation slideUp = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-
-        // Set animations
-        logo.startAnimation(fadeIn);
-        appName.startAnimation(slideUp);
-        // Delay and navigate to main activity
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EliasFinalproject" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/purple_500</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
@@ -10,7 +10,6 @@
     
     <!-- Splash Screen Theme -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>

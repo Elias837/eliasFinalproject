@@ -59,7 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subtitleText"
-            app:shapeAppearanceOverlay="@style/RoundedCorners">
+            app:shapeAppearanceOverlay="@null">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstNameEditText"
@@ -86,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstNameLayout"
-            app:shapeAppearanceOverlay="@style/RoundedCorners">
+            app:shapeAppearanceOverlay="@null">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastNameEditText"
@@ -113,7 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastNameLayout"
-            app:shapeAppearanceOverlay="@style/RoundedCorners">
+            app:shapeAppearanceOverlay="@null">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneEditText"
@@ -142,7 +142,7 @@
             app:layout_constraintTop_toBottomOf="@+id/phoneLayout"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="#6200EE"
-            app:shapeAppearanceOverlay="@style/RoundedCorners">
+            app:shapeAppearanceOverlay="@null">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
@@ -171,7 +171,7 @@
             app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="#6200EE"
-            app:shapeAppearanceOverlay="@style/RoundedCorners">
+            app:shapeAppearanceOverlay="@null">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordEditText"

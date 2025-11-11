@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'soraka.ash.eliasfinalproject'
-    compileSdk 33
+    compileSdk 36
 
     defaultConfig {
         applicationId "soraka.ash.eliasfinalproject"

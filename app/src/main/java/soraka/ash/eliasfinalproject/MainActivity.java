@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnAI;
     private Button btnStatistics;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

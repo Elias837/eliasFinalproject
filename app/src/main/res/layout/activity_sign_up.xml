@@ -106,7 +106,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
 
-            android:hint="Phone Number"
+            android:hint="Email"
             app:boxStrokeColor="#6200EE"
             app:endIconMode="custom"
             app:endIconTint="#6200EE"

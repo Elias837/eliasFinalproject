@@ -22,7 +22,7 @@ public interface MyIncomeQuery
     List<MyIncome> getAllIncomes();
 
     //get income by id
-    @Query("SELECT * FROM MyIncome WHERE id = :incomeId LIMIT 1")
+    @Query("SELECT * FROM MyIncome WHERE transactionId = :incomeId LIMIT 1")
     MyIncome getIncomeById(int incomeId);
 
     //get incomes by user id

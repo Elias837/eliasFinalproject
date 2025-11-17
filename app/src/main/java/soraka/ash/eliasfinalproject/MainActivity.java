@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnGoals;
     private Button btnAI;
     private Button btnStatistics;
+
+    private Button btnCalendar;
+    private Button btnCompass;
+    private Button btnToday;
+    private Button btnSettings;
+    private ImageButton IV2;
+    private ImageButton IV3;
+    private ImageButton IV4;
+    private ImageButton IV5;
 
 
     @Override

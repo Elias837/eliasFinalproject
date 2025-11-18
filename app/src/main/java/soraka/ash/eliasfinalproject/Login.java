@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
 
         // btnFacebook = findViewById(R.id.btnFacebook);
         btnSignup.setOnClickListener(v -> {
-            Intent intent = new Intent(Login.this, signUp.class);
+            Intent intent = new Intent(Login.this, SignUpActivity.class);
             startActivity(intent);
         });
     }

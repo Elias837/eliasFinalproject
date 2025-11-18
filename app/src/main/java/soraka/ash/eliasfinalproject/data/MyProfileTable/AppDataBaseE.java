@@ -1,0 +1,28 @@
+package soraka.ash.eliasfinalproject.data.MyProfileTable;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import android.content.Context;
+
+@Database(entities = {MyProfile.class}, version = 1, exportSchema = false)
+public abstract class AppDataBaseE extends RoomDatabase {
+    private static final String DATABASE_NAME = "elias_final_project_db";
+    private static AppDataBaseE instance;
+
+    // DAO declaration
+    public abstract MyProfileQuery myProfileDao();
+
+    // Singleton pattern to prevent multiple instances of database
+    public static synchronized AppDataBaseE getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(
+                    context.getApplicationContext(),
+                    AppDataBaseE.class,
+                    DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return instance;
+    }
+}

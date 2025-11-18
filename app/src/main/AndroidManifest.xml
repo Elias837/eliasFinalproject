@@ -24,8 +24,10 @@
             android:name=".accountsAndPay"
             android:exported="false" />
         <activity
-            android:name=".signUp"
-            android:exported="false" />
+            android:name=".SignUpActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Login"
             android:exported="false" />

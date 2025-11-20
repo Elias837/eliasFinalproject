@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Goal Icon -->
+        <ImageView
+            android:id="@+id/goalIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_goal"
+            android:contentDescription="Goal icon"
+            android:padding="8dp"
+            android:background="#EFF6FF"
+            android:tint="#4A6CF7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="#EFF6FF"/>
+
+        <!-- Goal Title -->
+        <TextView
+            android:id="@+id/goalTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="New Car"
+            android:textColor="#1E293B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goalIcon"
+            app:layout_constraintTop_toTopOf="@id/goalIcon" />
+
+        <!-- Goal Progress Text -->
+        <TextView
+            android:id="@+id/goalProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="$2,500 / $10,000"
+            android:textColor="#64748B"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/goalTitle"
+            app:layout_constraintTop_toBottomOf="@id/goalTitle" />
+
+        <!-- Progress Bar -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/goalProgressBar"
+            style="@style/Widget.MaterialComponents.LinearProgressIndicator"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="12dp"
+            android:progress="25"
+            android:progressTint="#4A6CF7"
+            android:progressBackgroundTint="#E2E8F0"
+            app:layout_constraintEnd_toEndOf="@id/goalTitle"
+            app:layout_constraintStart_toStartOf="@id/goalTitle"
+            app:layout_constraintTop_toBottomOf="@id/goalProgressText"
+            app:trackCornerRadius="4dp" />
+
+        <!-- Progress Percentage -->
+        <TextView
+            android:id="@+id/goalPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="25%"
+            android:textColor="#4A6CF7"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/goalProgressBar"
+            app:layout_constraintTop_toBottomOf="@id/goalProgressBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

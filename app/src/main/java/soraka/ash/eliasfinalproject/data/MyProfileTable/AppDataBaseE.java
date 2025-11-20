@@ -5,7 +5,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {MyProfile.class}, version = 1, exportSchema = false)
+import soraka.ash.eliasfinalproject.data.MyIncomeTable.MyIncome;
+
+@Database(entities = {MyProfile.class, MyIncome.class}, version = 1, exportSchema = false)
 public abstract class AppDataBaseE extends RoomDatabase {
     private static final String DATABASE_NAME = "elias_final_project_db";
     private static AppDataBaseE instance;

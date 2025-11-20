@@ -17,7 +17,7 @@ public interface MyProfileQuery
     @Query("SELECT * FROM MyProfile WHERE keyid IN (:userIds)")
     List<MyProfile> loadAllByIds(int[] userIds);
     //هل المستعمل موجود حسب الايميل وكلمة السر
-    @Query("SELECT * FROM MyProfile WHERE email = :myEmail AND passw = :myPassw LIMIT
+    @Query("SELECT * FROM MyProfile WHERE email = :myEmail AND passw = :myPassw")
     MyProfile checkEmailPassw(String myEmail, String myPassw);
     //فحص هل الايميل موجود من قبل
     @Query("SELECT * FROM MyProfile WHERE email = :myEmail LIMIT 1")

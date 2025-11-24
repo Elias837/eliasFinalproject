@@ -22,7 +22,6 @@
             android:text="Groceries"
             android:textColor="#1E293B"
             android:textSize="16sp"
-            android:textStyle="500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

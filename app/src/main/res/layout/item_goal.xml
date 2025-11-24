@@ -19,7 +19,6 @@
             android:id="@+id/goalIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_goal"
             android:contentDescription="Goal icon"
             android:padding="8dp"
             android:background="#EFF6FF"

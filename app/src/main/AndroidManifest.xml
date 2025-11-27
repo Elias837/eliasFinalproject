@@ -32,17 +32,21 @@
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".SplashScreenActivity"
-            android:exported="true">
+            android:name=".SignInActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".SplashScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
     </application>
 
 </manifest>

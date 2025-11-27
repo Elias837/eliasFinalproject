@@ -12,12 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnAcc;
-    private Button btnGoals;
-    private Button btnAI;
-    private Button btnStatistics;
+    private MaterialCardView btnAcc;
+    private MaterialCardView btnGoals;
+    private MaterialCardView btnAI;
+    private MaterialCardView btnStatistics;
 
     private Button btnCalendar;
     private Button btnCompass;

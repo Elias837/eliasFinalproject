@@ -28,10 +28,12 @@
     </style>
     
     <!-- Style for TextInputLayout -->
-   <item name="shapeAppearanceOverlay">@style/MyRoundShape</item>
-    </style name="MyRoundShape">
-        <item name="cornerFamily">rounded</item>
+    <style name="MyRoundShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerSize">12dp</item>
+    </style>
+    
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/MyRoundShape</item>
     </style>
     
     <!-- Style for OutlinedButton -->

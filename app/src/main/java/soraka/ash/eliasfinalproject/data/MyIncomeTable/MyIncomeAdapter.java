@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import soraka.ash.eliasfinalproject.R;
 
 public class MyIncomeAdapter extends ArrayAdapter<MyIncome> {
     public final int itemLayout;
@@ -30,11 +35,11 @@ public class MyIncomeAdapter extends ArrayAdapter<MyIncome> {
         ImageButton btnCall=vitem.findViewById(R.id.imgBtnCallitm);
         ImageButton btnDel=vitem.findViewById(R.id.imgBtnDeleteitm);
         //קבלת הנתון (עצם) הנוכחי
-        MyTask current=getItem(position);
+        MyIncome current=getItem(position);
         //הצגת הנתונים על שדות הרכיב הגרפי
         tvTitle.setText(current.getShortTitle());
-        tvText.setText(current.getText());
-        tvImportance.setText("Importance:"+current.getImportance());
+        tvText.setText(String.valueOf(current.getCategoryId()));
+        tvImportance.setText("Importance:"+current.getAmount());
         return vitem;
     }
 }

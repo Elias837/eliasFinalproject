@@ -3,6 +3,9 @@ package soraka.ash.eliasfinalproject.data.MyIncomeTable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import org.w3c.dom.Text;
+
 @Entity
 public class MyIncome
 {
@@ -200,7 +203,7 @@ public class MyIncome
                     ", userId=" + userId +
                     '}';
         }
-    }
+}
 
 
 

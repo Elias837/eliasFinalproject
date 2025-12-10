@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private MaterialCardView btnAcc;
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton IV3;
     private ImageButton IV4;
     private ImageButton IV5;
+    private Spinner spinner;
+
+    private spinner spnrIncome;
+
+    private FloatingActionButton fabAddIncome;
 
 
     @SuppressLint("MissingInflatedId")
@@ -40,7 +48,18 @@ public class MainActivity extends AppCompatActivity {
         btnAcc =findViewById(R.id.btnAcc);
         btnGoals =findViewById(R.id.btnGoals);
         btnAI =findViewById(R.id.btnAI);
-        btnStatistics =findViewById(R.id.btnStatistics);
+        btnStatistics = findViewById(R.id.btnStatistics);
+        
+        // Initialize the Spinner
+        spinner = findViewById(R.id.spnrIncome);
+        
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spnrIncome_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

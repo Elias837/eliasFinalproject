@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton IV3;
     private ImageButton IV4;
     private ImageButton IV5;
-    private Spinner spinner;
-
-    private spinner spnrIncome;
+    private Spinner spnrIncome;
 
     private FloatingActionButton fabAddIncome;
 
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btnStatistics = findViewById(R.id.btnStatistics);
         
         // Initialize the Spinner
-        spinner = findViewById(R.id.spnrIncome);
+        spnrIncome = findViewById(R.id.spnrIncome);
         
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        spnrIncome.setAdapter(adapter);
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

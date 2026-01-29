@@ -49,8 +49,7 @@
                 android:id="@+id/IV2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_my_calendar"
-
+                android:src="@android:drawable/ic_menu_my_calendar" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,8 +89,7 @@
                 android:id="@+id/IV3"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_compass"
-
+                android:src="@android:drawable/ic_menu_compass" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,8 +129,7 @@
                 android:id="@+id/IV5"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_today"
-
+                android:src="@android:drawable/ic_menu_today" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -172,8 +169,7 @@
                 android:id="@+id/IV4"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/_252963"
-
+                android:src="@drawable/_252963" />
 
             <TextView
                 android:layout_width="wrap_content"

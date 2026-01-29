@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 import android.content.Context;
 
 import soraka.ash.eliasfinalproject.data.MyIncomeTable.MyIncome;
+import soraka.ash.eliasfinalproject.data.MyIncomeTable.MyIncomeQuery;
 
 @Database(entities = {MyProfile.class, MyIncome.class}, version = 1, exportSchema = false)
 public abstract class AppDataBaseE extends RoomDatabase {
@@ -14,6 +15,7 @@ public abstract class AppDataBaseE extends RoomDatabase {
 
     // DAO declaration
     public abstract MyProfileQuery myProfileDao();
+    public abstract MyIncomeQuery myIncomeDao();
 
     // Singleton pattern to prevent multiple instances of database
     public static synchronized AppDataBaseE getInstance(Context context) {

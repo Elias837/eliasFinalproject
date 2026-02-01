@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton IV4;
     private ImageButton IV5;
 
-    private Spinner spnrIncome;
-    private FloatingActionButton fabAddIncome;
-
+    
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +48,6 @@ public class MainActivity extends AppCompatActivity {
         btnGoals = findViewById(R.id.btnGoals);
         btnAI = findViewById(R.id.btnAI);
         btnStatistics = findViewById(R.id.btnStatistics);
-
-        // Initialize the Spinner for income type selection
-        spnrIncome = findViewById(R.id.spnrIncome);
-
-        // 🔒 IMPORTANT: Null check to prevent crash
-        if (spnrIncome != null) {
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                    this,
-                    R.array.spnrIncome_array,
-                    android.R.layout.simple_spinner_item
-            );
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spnrIncome.setAdapter(adapter);
-        }
 
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override

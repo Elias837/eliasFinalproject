@@ -15,6 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+/**
+ * User registration activity with comprehensive form validation.
+ * Allows new users to create accounts with detailed validation for all fields.
+ * Features full-screen design and proper navigation flow to login after successful registration.
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private TextInputEditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, confirmPasswordEditText;
@@ -24,6 +29,13 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageView logoImage;
     private static final int MIN_PASSWORD_LENGTH = 8;
 
+    /**
+     * Called when the activity is first created. Initializes all UI components,
+     * sets up click listeners, and hides the action bar for full-screen design.
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *                           being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +74,23 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
     
+    /**
+     * Handles the toolbar back navigation button press.
+     * Calls onBackPressed() to provide consistent navigation behavior.
+     * @return true if the event was handled, false otherwise
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
+    /**
+     * Attempts to sign up the user by validating all form fields.
+     * Performs comprehensive validation including name requirements, email format,
+     * password strength, and password confirmation matching.
+     * Shows appropriate error messages for invalid inputs.
+     */
     private void attemptSignUp() {
         // Reset errors
         firstNameLayout.setError(null);
@@ -131,6 +154,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows a success message and navigates to the login screen.
+     * Uses Intent flags to clear the activity stack and prevent back navigation to sign up.
+     * @param message The success message to display
+     */
     private void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         
@@ -140,6 +168,11 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
     }
     
+    /**
+     * Shows an error message with custom styling for better visibility.
+     * Uses the default toast frame for consistent appearance.
+     * @param message The error message to display
+     */
     private void showError(String message) {
         // Show error in a more visible way
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);

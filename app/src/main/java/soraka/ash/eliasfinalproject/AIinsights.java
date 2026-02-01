@@ -8,8 +8,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * AI-powered financial insights activity.
+ * Currently provides a basic implementation with edge-to-edge display support.
+ * Intended for future development of AI-driven financial analysis and recommendations.
+ */
 public class AIinsights extends AppCompatActivity {
 
+    /**
+     * Called when the activity is first created. Sets up edge-to-edge display
+     * and configures system bar insets for proper layout handling.
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *                           being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,6 +13,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+/**
+ * Advanced sign-in activity with comprehensive email and password validation.
+ * Provides secure user authentication with proper input validation,
+ * error handling, and navigation to main features.
+ * 
+ * نشاط تسجيل دخول متقدم مع تحقق شامل من البريد الإلكتروني وكلمة المرور.
+ * يوفر مصادقة مستخدم آمنة مع التحقق الصحيح من الإدخال،
+ * ومعالجة الأخطاء، والتنقل إلى الميزات الرئيسية.
+ */
 public class SignInActivity extends AppCompatActivity {
 
     private TextInputLayout emailLayout, passwordLayout;
@@ -21,6 +30,19 @@ public class SignInActivity extends AppCompatActivity {
             "^[A-Za-z0-9+_.-]+@(.+)$"
     );
 
+    /**
+     * Called when the activity is first created. Initializes all UI components,
+     * sets up click listeners for sign-in button and sign-up redirect.
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *                           being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle)
+     * 
+     * يُستدعى عند إنشاء النشاط لأول مرة. يهيئ جميع مكونات واجهة المستخدم،
+     * ويقوم بإعداد مستمعي النقر لزر تسجيل الدخول وإعادة التوجيه إلى التسجيل.
+     * @param savedInstanceState إذا كان النشاط يعاد تهيئته بعد إيقاف تشغيله مسبقاً
+     *                           فإن هذا Bundle يحتوي على البيانات التي قدمها مؤخراً
+     *                           في onSaveInstanceState(Bundle)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +65,15 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Attempts to sign in the user by validating email and password inputs.
+     * Performs comprehensive validation including email format and password length checks.
+     * Shows appropriate error messages for invalid inputs and navigates to MainActivity on success.
+     * 
+     * يحاول تسجيل دخول المستخدم عن طريق التحقق من إدخالات البريد الإلكتروني وكلمة المرور.
+     * يقوم بالتحقق الشامل بما في ذلك التحقق من تنسيق البريد الإلكتروني وفحص طول كلمة المرور.
+     * يعرض رسائل خطأ مناسبة للإدخالات غير الصالحة وينتقل إلى MainActivity عند النجاح.
+     */
     private void attemptSignIn() {
         try {
             // Reset errors
@@ -87,6 +118,15 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the email format using a regex pattern.
+     * @param email The email string to validate
+     * @return true if the email format is valid, false otherwise
+     * 
+     * يتحقق من تنسيق البريد الإلكتروني باستخدام نمط regex.
+     * @param email سلسلة البريد الإلكتروني للتحقق من صحتها
+     * @return true إذا كان تنسيق البريد الإلكتروني صالحاً، false خلاف ذلك
+     */
     private boolean isValidEmail(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
     }

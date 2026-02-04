@@ -1,5 +1,6 @@
 package soraka.ash.eliasfinalproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,11 +16,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
- * User registration activity with comprehensive form validation.
- * Allows new users to create accounts with detailed validation for all fields.
- * Features full-screen design and proper navigation flow to login after successful registration.
+ * Modern user registration activity with Material Design and Firebase integration.
+ * Provides comprehensive form validation, social signup options, and smooth user experience.
+ * Features clean UI with proper error handling and navigation flow.
+ *
+ * نشاط تسجيل مستخدم حديث مع تصميم Material وتكامل Firebase.
+ * يوفر تحقق شامل من النماذج، خيارات التسجيل الاجتماعي، وتجربة مستخدم سلسة.
+ * يتميز بواجهة مستخدم نظيفة مع معالجة أخطاء مناسبة وتدفق تنقل.
  */
 public class SignUpActivity extends AppCompatActivity {
 
@@ -27,6 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button signUpButton;
     private ImageView logoImage;
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+    private TextView titleText, subtitleText, loginText;
     private static final int MIN_PASSWORD_LENGTH = 8;
 
     /**
@@ -36,10 +47,23 @@ public class SignUpActivity extends AppCompatActivity {
      *                           being shut down then this Bundle contains the data it most
      *                           recently supplied in onSaveInstanceState(Bundle)
      */
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        // Check if user is already signed in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is already signed in, go to MainActivity
+            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+            finish();
+            return;
+        }
 
         // Initialize views
         firstNameEditText = findViewById(R.id.firstNameEditText);
@@ -55,9 +79,25 @@ public class SignUpActivity extends AppCompatActivity {
         confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
         signUpButton = findViewById(R.id.signUpButton);
         logoImage = findViewById(R.id.logoImage);
+        
+        // Modern UI elements
+        progressBar = findViewById(R.id.progressBar);
+        titleText = findViewById(R.id.titleText);
+        subtitleText = findViewById(R.id.subtitleText);
+        loginText = findViewById(R.id.loginText);
 
         // Set up click listeners
-        findViewById(R.id.signUpButton).setOnClickListener(v -> attemptSignUp());
+        if (signUpButton != null) {
+            signUpButton.setOnClickListener(v -> attemptSignUp());
+        }
+        
+        // Login redirect
+        if (loginText != null) {
+            loginText.setOnClickListener(v -> {
+                startActivity(new Intent(SignUpActivity.this, Login.class));
+                finish();
+            });
+        }
         
         // Set up login button click
 //        Button loginButton = findViewById(R.id.loginButton);
@@ -92,12 +132,19 @@ public class SignUpActivity extends AppCompatActivity {
      * Shows appropriate error messages for invalid inputs.
      */
     private void attemptSignUp() {
+        // Check if EditText fields are initialized
+        if (firstNameEditText == null || lastNameEditText == null || 
+            emailEditText == null || passwordEditText == null || confirmPasswordEditText == null) {
+            Toast.makeText(this, "UI elements not initialized", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Reset errors
-        firstNameLayout.setError(null);
-        lastNameLayout.setError(null);
-        emailLayout.setError(null);
-        passwordLayout.setError(null);
-        confirmPasswordLayout.setError(null);
+        if (firstNameLayout != null) firstNameLayout.setError(null);
+        if (lastNameLayout != null) lastNameLayout.setError(null);
+        if (emailLayout != null) emailLayout.setError(null);
+        if (passwordLayout != null) passwordLayout.setError(null);
+        if (confirmPasswordLayout != null) confirmPasswordLayout.setError(null);
 
         String firstName = firstNameEditText.getText().toString().trim();
         String lastName = lastNameEditText.getText().toString().trim();
@@ -109,63 +156,76 @@ public class SignUpActivity extends AppCompatActivity {
 
         // First name validation
         if (TextUtils.isEmpty(firstName)) {
-            firstNameLayout.setError("First name is required");
+            if (firstNameLayout != null) firstNameLayout.setError("First name is required");
             isValid = false;
         }
 
         // Last name validation
         if (TextUtils.isEmpty(lastName)) {
-            lastNameLayout.setError("Last name is required");
+            if (lastNameLayout != null) lastNameLayout.setError("Last name is required");
             isValid = false;
         }
 
         // Email validation
         if (TextUtils.isEmpty(email)) {
-            emailLayout.setError("Email is required");
+            if (emailLayout != null) emailLayout.setError("Email is required");
             isValid = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailLayout.setError("Please enter a valid email");
+            if (emailLayout != null) emailLayout.setError("Please enter a valid email");
             isValid = false;
         }
 
         // Password validation
         if (TextUtils.isEmpty(password)) {
-            passwordLayout.setError("Password is required");
+            if (passwordLayout != null) passwordLayout.setError("Password is required");
             isValid = false;
         } else if (password.length() < MIN_PASSWORD_LENGTH) {
-            passwordLayout.setError("Password must be at least " + MIN_PASSWORD_LENGTH + " characters");
+            if (passwordLayout != null) passwordLayout.setError("Password must be at least " + MIN_PASSWORD_LENGTH + " characters");
             isValid = false;
         }
 
         // Confirm password validation
         if (TextUtils.isEmpty(confirmPassword)) {
-            confirmPasswordLayout.setError("Please confirm your password");
+            if (confirmPasswordLayout != null) confirmPasswordLayout.setError("Please confirm your password");
             isValid = false;
         } else if (!password.equals(confirmPassword)) {
-            confirmPasswordLayout.setError("Passwords don't match");
+            if (confirmPasswordLayout != null) confirmPasswordLayout.setError("Passwords don't match");
             isValid = false;
         }
 
         if (isValid) {
-            // All validations passed - proceed with sign up
-            showSuccessMessage("Account created successfully!");
-            // Here you would typically make an API call to register the user
-            // For example: registerUser(firstName, lastName, email, password);
+            // Show progress
+            if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+            if (signUpButton != null) signUpButton.setEnabled(false);
+            
+            // Create user with Firebase
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (progressBar != null) progressBar.setVisibility(View.GONE);
+                    if (signUpButton != null) signUpButton.setEnabled(true);
+                    
+                    if (task.isSuccessful()) {
+                        // Sign up success, update UI and navigate to main
+                        showSuccessMessage("Account created successfully!");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        
+                        // Navigate directly to MainActivity after successful signup
+                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        // If sign up fails, display a message to the user
+                        showError("Sign up failed: " + task.getException().getMessage());
+                    }
+                });
         }
     }
 
     /**
-     * Shows a success message and navigates to the login screen.
-     * Uses Intent flags to clear the activity stack and prevent back navigation to sign up.
+     * Shows a success message to the user.
      * @param message The success message to display
      */
     private void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        
-        // After successful signup, navigate to the login screen
-        startActivity(new Intent(this, Login.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-        finish();
     }
     
     /**

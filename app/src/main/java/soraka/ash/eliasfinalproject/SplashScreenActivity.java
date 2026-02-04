@@ -11,11 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Application splash screen that displays on app launch.
- * Shows branding elements and automatically navigates to the sign-up screen after a delay.
- * Provides a smooth user experience during app initialization.
+ * Shows branding elements and automatically navigates to the appropriate screen after a delay.
+ * Provides a smooth user experience during app initialization with authentication check.
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private Button bt_login;
     private Button bt_google_login;
     private Button bt_facebook_login;
+    private FirebaseAuth mAuth;
 
 
 
@@ -42,16 +45,27 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        // Set up delayed navigation to SignUpActivity after 4 seconds
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        // Set up delayed navigation with authentication check
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    // User is already signed in, go to MainActivity
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    // User not signed in, go to SignInActivity
+                    Intent intent = new Intent(SplashScreenActivity.this, SignInActivity.class);
+                    startActivity(intent);
+                }
                 finish();
             }
-        }, 4000); // 4 seconds delay
+        }, 2000); // 2 seconds delay
         // Delay and navigate to main activity
 //        new Handler().postDelayed(() -> {
 //            startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));

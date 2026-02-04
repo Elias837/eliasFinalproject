@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -26,6 +28,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private TextInputLayout emailLayout, passwordLayout;
     private TextInputEditText emailEditText, passwordEditText;
+    private FirebaseAuth mAuth;
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@(.+)$"
     );
@@ -47,6 +50,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         // Initialize views
         emailLayout = findViewById(R.id.emailLayout);
@@ -77,44 +83,65 @@ public class SignInActivity extends AppCompatActivity {
     private void attemptSignIn() {
         try {
             // Reset errors
-            emailLayout.setError(null);
-            passwordLayout.setError(null);
+            if (emailLayout != null) emailLayout.setError(null);
+            if (passwordLayout != null) passwordLayout.setError(null);
 
-            // Get values
-            String email = Objects.requireNonNull(emailEditText.getText()).toString().trim();
-            String password = Objects.requireNonNull(passwordEditText.getText()).toString().trim();
+            // Get values with null checks
+            String email = emailEditText != null ? emailEditText.getText().toString().trim() : "";
+            String password = passwordEditText != null ? passwordEditText.getText().toString().trim() : "";
 
             boolean isValid = true;
 
             // Validate email
             if (email.isEmpty()) {
-                emailLayout.setError("Email is required");
+                if (emailLayout != null) emailLayout.setError("Email is required");
                 isValid = false;
             } else if (!isValidEmail(email)) {
-                emailLayout.setError("Please enter a valid email address");
+                if (emailLayout != null) emailLayout.setError("Please enter a valid email address");
                 isValid = false;
             }
 
             // Validate password
             if (password.isEmpty()) {
-                passwordLayout.setError("Password is required");
+                if (passwordLayout != null) passwordLayout.setError("Password is required");
                 isValid = false;
             } else if (password.length() < 8) {
-                passwordLayout.setError("Password must be at least 8 characters");
+                if (passwordLayout != null) passwordLayout.setError("Password must be at least 8 characters");
                 isValid = false;
             }
 
             if (isValid) {
-                // Here you would typically validate credentials with your backend
-                // For this example, we'll just show a success message and navigate to MainActivity
-                Toast.makeText(this, "Sign in successful!", Toast.LENGTH_SHORT).show();
-                // Navigate to MainActivity
-                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                finish();
+                // Authenticate with Firebase
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI and navigate to MainActivity
+                            Toast.makeText(SignInActivity.this, "Sign in successful!", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user
+                            Toast.makeText(SignInActivity.this, "Authentication failed: " + task.getException().getMessage(), 
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
             }
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is already signed in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is already signed in, go to MainActivity
+            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+            finish();
         }
     }
 

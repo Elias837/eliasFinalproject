@@ -18,6 +18,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import android.util.Log;
+import androidx.annotation.NonNull;
+import soraka.ash.eliasfinalproject.models.MyUser;
 
 /**
  * Modern user registration activity with Material Design and Firebase integration.
@@ -39,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView titleText, subtitleText, loginText;
     private static final int MIN_PASSWORD_LENGTH = 8;
+    private static final String TAG = "SignUpActivity";
 
     /**
      * Called when the activity is first created. Initializes all UI components,
@@ -382,6 +390,109 @@ public class SignUpActivity extends AppCompatActivity {
         */
     }
     
+    /**
+     * Validates email and password for Firebase sign in.
+     * Checks email format and password requirements before authentication.
+     * Handles sign in process with proper error handling and user feedback.
+     * 
+     * يتحقق من البريد الإلكتروني وكلمة المرور لتسجيل الدخول إلى Firebase.
+     * يتحقق من تنسيق البريد الإلكتروني ومتطلبات كلمة المرور قبل المصادقة.
+     * يتعامل مع عملية تسجيل الدخول مع معالجة أخطاء مناسبة وتغذية راجعة للمستخدم.
+     */
+    private void checkEmailPassw_FB(String email, String password) {
+        // Validate email
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Email is required", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate password
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (password.length() < MIN_PASSWORD_LENGTH) {
+            Toast.makeText(this, "Password must be at least " + MIN_PASSWORD_LENGTH + " characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Show progress
+        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+        if (signUpButton != null) signUpButton.setEnabled(false);
+
+        // Sign in with Firebase
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, task -> {
+                if (progressBar != null) progressBar.setVisibility(View.GONE);
+                if (signUpButton != null) signUpButton.setEnabled(true);
+                
+                if (task.isSuccessful()) {
+                    // Sign in success
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        Toast.makeText(SignUpActivity.this, "Sign in successful!", Toast.LENGTH_SHORT).show();
+                        
+                        // Navigate to MainActivity
+                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } else {
+                    // If sign in fails, display a message to the user
+                    String errorMessage = task.getException() != null ? 
+                        task.getException().getMessage() : "Sign in failed";
+                    Toast.makeText(SignUpActivity.this, "Sign in failed: " + errorMessage, Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    /**
+     * Saves user data to Firebase Realtime Database.
+     * Creates a unique user ID and stores the user object in the "users" collection.
+     * Handles success and failure callbacks with appropriate user feedback.
+     * 
+     * يحفظ بيانات المستخدم إلى Firebase Realtime Database.
+     * ينشئ معرف مستخدم فريد ويخزن كائن المستخدم في مجموعة "users".
+     * يتعامل مع عمليات رد النداء الناجحة والفاشلة مع تغذية راجعة مناسبة للمستخدم.
+     */
+    public void saveUser(MyUser user) {
+        // الحصول على مرجع إلى عقدة "users" في قاعدة البيانات
+        // تهيئة Firebase Realtime Database
+        // مؤشر لقاعدة البيانات
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        // مؤشر لجدول المستعملين
+        DatabaseReference usersRef = database.child("users");
+        // إنشاء مفتاح فريد للمستخدم الجديد
+        DatabaseReference newUserRef = usersRef.push();
+        // تعيين معرف المستخدم في كائن MyUser
+        user.setUserId(newUserRef.getKey());
+        // حفظ بيانات المستخدم في قاعدة البيانات
+        // اضافة كائن "لمجموعة" المستعملين ومعالج حدث لفحص نجاح المطلوب
+        // معالج حدث لفحص هل تم المطلوب من قاعدة البيانات
+        newUserRef.setValue(user)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(SignUpActivity.this, "Succeeded to add User", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                    // تم حفظ البيانات بنجاح
+                    Log.d(TAG, "تم حفظ المستخدم بنجاح: " + user.getUserId());
+                    // تحديث واجهة المستخدم أو تنفيذ إجراءات أخرى
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // معالجة الأخطاء
+                    Log.e(TAG, "خطأ في حفظ المستخدم: " + e.getMessage(), e);
+                    Toast.makeText(SignUpActivity.this, "Failed to add User", Toast.LENGTH_SHORT).show();
+                    // عرض رسالة خطأ للمستخدم
+                }
+            });
+    }
+
     /**
      * Shows an error message with custom styling for better visibility.
      * Uses the default toast frame for consistent appearance.

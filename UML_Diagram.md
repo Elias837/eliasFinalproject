@@ -1,4 +1,4 @@
-# Elias Final Project - UML Class Diagram
+# Elias Final Project - Complete UML Class Diagram
 
 ```mermaid
 classDiagram
@@ -34,6 +34,28 @@ classDiagram
         -updateDateInView()
     }
 
+    class AddUserActivity {
+        -TextInputEditText nameEditText
+        -TextInputEditText emailEditText
+        -TextInputLayout nameLayout
+        -TextInputLayout emailLayout
+        -MaterialButton addButton
+        -MaterialCardView mainCard
+        -CircularProgressIndicator progressBar
+        -static String TAG
+        +onCreate(Bundle)
+        -initializeViews()
+        -setupClickListeners()
+        -setupAnimations()
+        -createUserAndSave(String, String)
+        -saveUserToFirebase(MyUser)
+        -handleSuccess()
+        -handleError(String)
+        -showLoading(boolean)
+        -animateSuccess()
+        -isValidEmail(String) boolean
+    }
+
     class goalsAbudgeting {
         -FloatingActionButton addGoalFab
         +onCreate(Bundle)
@@ -61,14 +83,55 @@ classDiagram
     }
 
     class SignUpActivity {
+        -TextInputEditText firstNameEditText
+        -TextInputEditText lastNameEditText
+        -TextInputEditText emailEditText
+        -TextInputEditText passwordEditText
+        -TextInputEditText confirmPasswordEditText
+        -TextInputLayout firstNameLayout
+        -TextInputLayout lastNameLayout
+        -TextInputLayout emailLayout
+        -TextInputLayout passwordLayout
+        -TextInputLayout confirmPasswordLayout
+        -Button signUpButton
+        -ImageView logoImage
+        -FirebaseAuth mAuth
+        -ProgressBar progressBar
+        -TextView titleText
+        -TextView subtitleText
+        -TextView loginText
+        -static int MIN_PASSWORD_LENGTH
+        -static String TAG
         +onCreate(Bundle)
+        -attemptSignUp()
+        -checkAndSignUp_FB()
+        -saveUserProfile(String, String, String, String)
+        -checkEmailPassw_FB(String, String)
+        -saveUser(MyUser)
+        -showError(String)
+        -showSuccessMessage(String)
     }
 
     class SplashScreenActivity {
         +onCreate(Bundle)
     }
 
-    %% Data Layer - Database
+    %% Data Layer - Firebase
+    class MyUser {
+        -String userId
+        -String name
+        -String email
+        +MyUser()
+        +MyUser(String, String)
+        +getUserId() String
+        +setUserId(String)
+        +getName() String
+        +setName(String)
+        +getEmail() String
+        +setEmail(String)
+    }
+
+    %% Data Layer - Local Database
     class AppDataBaseE {
         -static String DATABASE_NAME
         -static AppDataBaseE instance
@@ -127,6 +190,33 @@ classDiagram
         %% RecyclerView adapter for income items
     }
 
+    %% Firebase Classes (External Dependencies)
+    class FirebaseDatabase {
+        +getInstance() FirebaseDatabase
+        +getReference() DatabaseReference
+    }
+
+    class DatabaseReference {
+        +child(String) DatabaseReference
+        +push() DatabaseReference
+        +setValue(Object) Task
+        +getKey() String
+    }
+
+    class FirebaseAuth {
+        +getInstance() FirebaseAuth
+        +createUserWithEmailAndPassword(String, String) Task
+        +signInWithEmailAndPassword(String, String) Task
+        +getCurrentUser() FirebaseUser
+    }
+
+    class Task {
+        +addOnSuccessListener(OnSuccessListener) Task
+        +addOnFailureListener(OnFailureListener) Task
+        +isSuccessful() boolean
+        +getException() Exception
+    }
+
     %% Relationships
     MainActivity --> accountsAndPay : navigates to
     MainActivity --> goalsAbudgeting : navigates to
@@ -134,7 +224,24 @@ classDiagram
     MainActivity --> statistics : navigates to
     
     goalsAbudgeting --> AddGoal2Activity : navigates to
+    goalsAbudgeting --> AddUserActivity : navigates to
     
+    %% Firebase Relationships
+    AddUserActivity --> MyUser : creates and saves
+    AddUserActivity --> FirebaseDatabase : uses
+    AddUserActivity --> DatabaseReference : uses
+    AddUserActivity --> Task : handles callbacks
+    
+    SignUpActivity --> MyUser : creates and saves
+    SignUpActivity --> FirebaseAuth : uses for authentication
+    SignUpActivity --> FirebaseDatabase : uses for data storage
+    SignUpActivity --> DatabaseReference : uses
+    SignUpActivity --> Task : handles callbacks
+    
+    MyUser --> DatabaseReference : saved to
+    DatabaseReference --> FirebaseDatabase : part of
+    
+    %% Local Database Relationships
     AppDataBaseE --> MyIncome : contains
     AppDataBaseE --> MyProfile : contains
     AppDataBaseE --> MyIncomeQuery : provides
@@ -152,6 +259,7 @@ classDiagram
     %% Inheritance
     MainActivity <|-- AppCompatActivity
     AddGoal2Activity <|-- AppCompatActivity
+    AddUserActivity <|-- AppCompatActivity
     goalsAbudgeting <|-- AppCompatActivity
     AIinsights <|-- AppCompatActivity
     statistics <|-- AppCompatActivity
@@ -164,43 +272,159 @@ classDiagram
     AppDataBaseE <|-- RoomDatabase
     MyIncome <|-- Entity
     MyProfile <|-- Entity
+
+    %% Dependencies (Dashed lines)
+    AddUserActivity ..> FirebaseDatabase : depends on
+    SignUpActivity ..> FirebaseAuth : depends on
+    AddUserActivity ..> MyUser : uses model
+    SignUpActivity ..> MyUser : uses model
 ```
 
-## Architecture Overview
+## Complete Architecture Overview
 
-This Android application follows a **Model-View-Controller (MVC)** pattern with the following layers:
+This Android application follows a **Hybrid Architecture Pattern** combining **Model-View-Controller (MVC)** with **Firebase Integration**:
 
-### **Presentation Layer (Activities)**
-- **MainActivity**: Main dashboard with navigation to core features
+### **🎯 Presentation Layer (Activities & UI)**
+- **MainActivity**: Main dashboard with Material Design navigation cards
 - **AddGoal2Activity**: Goal creation form with date picker and validation
+- **AddUserActivity**: Modern user creation with Firebase integration (NEW)
 - **goalsAbudgeting**: Budget and goals management screen
 - **AIinsights**: AI-powered financial insights (placeholder)
 - **statistics**: Financial statistics and analytics (placeholder)
 - **accountsAndPay**: Account management and payments (placeholder)
-- **Authentication**: Login, Sign In, Sign Up, and Splash screens
+- **Authentication Flow**: Login, Sign In, Sign Up, and Splash screens
 
-### **Business Logic Layer**
-- **BudgetItem**: Model for budget categories with progress tracking
-- **BudgetAdapter**: RecyclerView adapter for displaying budget items
-- **MyIncomeAdapter**: RecyclerView adapter for income/expense items
+### **🔥 Firebase Integration Layer**
+- **MyUser**: User model for Firebase Firestore/Realtime Database
+- **FirebaseAuth**: User authentication and session management
+- **FirebaseDatabase**: Cloud database for user data storage
+- **DatabaseReference**: Pointers to specific database locations
+- **Task**: Async operation handling with success/failure callbacks
 
-### **Data Layer**
-- **AppDataBaseE**: Room database singleton
+### **💾 Local Data Layer (Room Database)**
+- **AppDataBaseE**: Room database singleton instance
 - **MyIncome**: Entity representing financial transactions
 - **MyProfile**: Entity representing user profile data
 - **MyIncomeQuery & MyProfileQuery**: DAO interfaces for database operations
 
-### **Key Features Implemented**
-1. **Navigation System**: Main dashboard with Material Design cards
-2. **Goal Management**: Complete goal creation workflow with validation
-3. **Database Architecture**: Room-based persistence layer
-4. **Financial Tracking**: Comprehensive transaction model with Arabic documentation
-5. **UI Components**: Material Design components throughout
+### **🎨 Business Logic Layer**
+- **BudgetItem**: Model for budget categories with progress tracking
+- **BudgetAdapter**: RecyclerView adapter for displaying budget items
+- **MyIncomeAdapter**: RecyclerView adapter for income/expense items
 
-### **Current Status**
+### **🔗 Key Relationships & Dependencies**
+
+#### **Navigation Flow:**
+```
+MainActivity → goalsAbudgeting → AddGoal2Activity
+MainActivity → goalsAbudgeting → AddUserActivity
+MainActivity → accountsAndPay
+MainActivity → AIinsights
+MainActivity → statistics
+```
+
+#### **Firebase Data Flow:**
+```
+AddUserActivity → MyUser → DatabaseReference → FirebaseDatabase
+SignUpActivity → FirebaseAuth → MyUser → DatabaseReference
+```
+
+#### **Local Database Flow:**
+```
+Activities → DAO Classes → Room Database → Entities
+```
+
+### **📋 Detailed Class Responsibilities**
+
+#### **AddUserActivity (NEW)**
+- **UI Management**: Material Design components with animations
+- **Input Validation**: Email format and required field checking
+- **Firebase Operations**: User creation and storage with error handling
+- **User Experience**: Loading states, success animations, error feedback
+
+#### **SignUpActivity**
+- **Authentication**: Firebase Auth integration for user registration
+- **Form Validation**: Comprehensive password and email validation
+- **Profile Creation**: User profile creation and Firebase storage
+- **Navigation**: Flow management between authentication states
+
+#### **MyUser Model**
+- **Data Structure**: User information container
+- **Firebase Serialization**: Automatic JSON conversion
+- **Validation Support**: Data integrity maintenance
+
+### **🏗️ Architecture Patterns Used**
+
+1. **MVC Pattern**: Activities as Controllers, XML as Views, Models as Data
+2. **Repository Pattern**: DAO classes abstracting database operations
+3. **Observer Pattern**: Firebase Task callbacks for async operations
+4. **Singleton Pattern**: Database instance management
+5. **Factory Pattern**: Firebase instance creation
+
+### **🔧 Technology Stack**
+
+#### **UI Framework:**
+- Material Design Components
+- RecyclerView for lists
+- TextInputLayout for forms
+- MaterialButton for actions
+
+#### **Database:**
+- Firebase Realtime Database (Cloud)
+- Room Database (Local)
+- Dual storage architecture
+
+#### **Authentication:**
+- Firebase Authentication
+- Email/Password authentication
+- Session management
+
+### **📊 Data Flow Diagram**
+
+#### **User Creation Flow:**
+```
+User Input → Validation → MyUser Object → Firebase Storage → Success/Error Feedback
+```
+
+#### **Goal Creation Flow:**
+```
+User Input → Validation → Goal Object → Local Storage → UI Update
+```
+
+### **🎯 Key Features Implemented**
+
+1. **✅ Modern UI/UX**: Material Design with animations and transitions
+2. **✅ Firebase Integration**: Complete user management system
+3. **✅ Dual Database**: Cloud (Firebase) + Local (Room) storage
+4. **✅ Form Validation**: Comprehensive input validation
+5. **✅ Error Handling**: User-friendly error messages and recovery
+6. **✅ Navigation System**: Intuitive app flow management
+7. **✅ Data Models**: Well-structured entity relationships
+8. **✅ Async Operations**: Proper callback handling
+
+### **🔄 Current Implementation Status**
+
+#### **Completed Modules:**
 - ✅ Core navigation structure
+- ✅ User authentication system
+- ✅ User creation with Firebase (AddUserActivity)
 - ✅ Goal creation functionality
 - ✅ Database schema and entities
-- ✅ Basic UI layouts
-- 🔄 AI insights, statistics, and accounts modules need implementation
-- 🔄 Data binding and business logic integration needed
+- ✅ Modern UI components
+- ✅ Firebase integration patterns
+
+#### **Pending Implementation:**
+- 🔄 AI insights module
+- 🔄 Statistics and analytics
+- 🔄 Accounts and payments module
+- 🔄 Data synchronization between Firebase and Room
+- 🔄 Advanced user profile management
+
+### **🚀 Architecture Benefits**
+
+1. **Scalability**: Modular design allows easy feature addition
+2. **Maintainability**: Clear separation of concerns
+3. **Testability**: Well-defined interfaces for unit testing
+4. **Performance**: Efficient data loading and caching
+5. **User Experience**: Modern, responsive UI with proper feedback
+6. **Data Security**: Firebase authentication and proper validation

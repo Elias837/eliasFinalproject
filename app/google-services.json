@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1012740596915",
+    "project_id": "eliasfinalproject",
+    "storage_bucket": "eliasfinalproject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012740596915:android:944a6c9ecb5e8f6f14fcc6",
+        "android_client_info": {
+          "package_name": "soraka.ash.eliasfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4-vAqg51gDpXwyqM4K29-Cz3OlyLJLvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

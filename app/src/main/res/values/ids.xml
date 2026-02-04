@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="imgVitm" type="id" />
+    <item name="imgBtnDeleteitm" type="id" />
+    <item name="imgBtnCallitm" type="id" />
+    <item name="imgBtnEdititm" type="id" />
+    <item name="imgBtnSendSmsitm" type="id" />
+    <item name="tvItmImportance" type="id" />
+    <item name="tvItmText" type="id" />
+    <item name="tvItmTitle" type="id" />
+    <item name="spnrIncome" type="id" />
+    <item name="loginText" type="id" />
+    <item name="progressBar" type="id" />
+    <item name="forgotPasswordText" type="id" />
+</resources>

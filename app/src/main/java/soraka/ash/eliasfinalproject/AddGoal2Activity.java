@@ -1,5 +1,6 @@
 package soraka.ash.eliasfinalproject;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -233,6 +234,7 @@ public class AddGoal2Activity extends AppCompatActivity {
      * يعرض رسالة تحذير إذا أدخل المستخدم أي بيانات
      * سيتم تجاهلها بالرجوع للخلف.
      */
+    @SuppressLint("GestureBackNavigation")
     @Override
     public void onBackPressed() {
         // Optional: Add a confirmation dialog if the user has entered any data

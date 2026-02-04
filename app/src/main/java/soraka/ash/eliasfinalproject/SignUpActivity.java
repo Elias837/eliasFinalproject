@@ -65,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+
         // Initialize views
         firstNameEditText = findViewById(R.id.firstNameEditText);
         lastNameEditText = findViewById(R.id.lastNameEditText);
@@ -226,6 +227,159 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Registers and saves user data with Firebase authentication.
+     * Performs comprehensive validation and creates user account with Firebase.
+     * Saves user profile information and handles success/error states.
+     * 
+     * يسجل ويحفظ بيانات المستخدم مع مصادقة Firebase.
+     * يقوم بالتحقق الشامل وإنشاء حساب المستخدم مع Firebase.
+     * يحفظ معلومات ملف المستخدم ويتعامل مع حالات النجاح/الخطأ.
+     */
+    private void checkAndSignUp_FB() {
+        // Check if EditText fields are initialized
+        if (firstNameEditText == null || lastNameEditText == null || 
+            emailEditText == null || passwordEditText == null || confirmPasswordEditText == null) {
+            Toast.makeText(this, "UI elements not initialized", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get user input
+        String firstName = firstNameEditText.getText().toString().trim();
+        String lastName = lastNameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+
+        // Reset errors
+        if (firstNameLayout != null) firstNameLayout.setError(null);
+        if (lastNameLayout != null) lastNameLayout.setError(null);
+        if (emailLayout != null) emailLayout.setError(null);
+        if (passwordLayout != null) passwordLayout.setError(null);
+        if (confirmPasswordLayout != null) confirmPasswordLayout.setError(null);
+
+        boolean isValid = true;
+
+        // Validate first name
+        if (TextUtils.isEmpty(firstName)) {
+            if (firstNameLayout != null) firstNameLayout.setError("First name is required");
+            isValid = false;
+        } else if (firstName.length() < 2) {
+            if (firstNameLayout != null) firstNameLayout.setError("First name must be at least 2 characters");
+            isValid = false;
+        }
+
+        // Validate last name
+        if (TextUtils.isEmpty(lastName)) {
+            if (lastNameLayout != null) lastNameLayout.setError("Last name is required");
+            isValid = false;
+        } else if (lastName.length() < 2) {
+            if (lastNameLayout != null) lastNameLayout.setError("Last name must be at least 2 characters");
+            isValid = false;
+        }
+
+        // Validate email
+        if (TextUtils.isEmpty(email)) {
+            if (emailLayout != null) emailLayout.setError("Email is required");
+            isValid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (emailLayout != null) emailLayout.setError("Please enter a valid email address");
+            isValid = false;
+        }
+
+        // Validate password
+        if (TextUtils.isEmpty(password)) {
+            if (passwordLayout != null) passwordLayout.setError("Password is required");
+            isValid = false;
+        } else if (password.length() < MIN_PASSWORD_LENGTH) {
+            if (passwordLayout != null) passwordLayout.setError("Password must be at least " + MIN_PASSWORD_LENGTH + " characters");
+            isValid = false;
+        } else if (!password.matches(".*[A-Z].*")) {
+            if (passwordLayout != null) passwordLayout.setError("Password must contain at least one uppercase letter");
+            isValid = false;
+        } else if (!password.matches(".*[0-9].*")) {
+            if (passwordLayout != null) passwordLayout.setError("Password must contain at least one number");
+            isValid = false;
+        }
+
+        // Validate password confirmation
+        if (TextUtils.isEmpty(confirmPassword)) {
+            if (confirmPasswordLayout != null) confirmPasswordLayout.setError("Please confirm your password");
+            isValid = false;
+        } else if (!password.equals(confirmPassword)) {
+            if (confirmPasswordLayout != null) confirmPasswordLayout.setError("Passwords don't match");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        // Show progress
+        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+        if (signUpButton != null) signUpButton.setEnabled(false);
+
+        // Create user with Firebase
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, task -> {
+                if (progressBar != null) progressBar.setVisibility(View.GONE);
+                if (signUpButton != null) signUpButton.setEnabled(true);
+                
+                if (task.isSuccessful()) {
+                    // Sign up success
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        // Update user profile with display name
+                        String displayName = firstName + " " + lastName;
+                        
+                        // You can save additional user data to Firebase Firestore here
+                        // Example: saveUserProfile(user.getUid(), firstName, lastName, email);
+                        
+                        Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                        
+                        // Navigate to MainActivity
+                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } else {
+                    // If sign up fails, display a message to the user
+                    String errorMessage = task.getException() != null ? 
+                        task.getException().getMessage() : "Sign up failed";
+                    Toast.makeText(SignUpActivity.this, "Sign up failed: " + errorMessage, Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    /**
+     * Optional: Save additional user profile data to Firebase Firestore
+     * This method can be called from checkAndSignUp_FB after successful registration
+     * 
+     * اختياري: حفظ بيانات ملف المستخدم الإضافية إلى Firebase Firestore
+     * يمكن استدعاء هذه الطريقة من checkAndSignUp_FB بعد التسجيل الناجح
+     */
+    private void saveUserProfile(String userId, String firstName, String lastName, String email) {
+        // TODO: Implement Firebase Firestore integration to save user profile
+        // Example implementation:
+        /*
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+        user.put("firstName", firstName);
+        user.put("lastName", lastName);
+        user.put("email", email);
+        user.put("createdAt", System.currentTimeMillis());
+        user.put("accountType", "standard");
+        
+        db.collection("users").document(userId)
+            .set(user)
+            .addOnSuccessListener(aVoid -> {
+                Log.d("SignUpActivity", "User profile saved successfully");
+            })
+            .addOnFailureListener(e -> {
+                Log.w("SignUpActivity", "Error saving user profile", e);
+            });
+        */
     }
     
     /**

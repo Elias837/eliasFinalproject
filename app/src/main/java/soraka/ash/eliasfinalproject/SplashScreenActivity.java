@@ -47,6 +47,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        
+        // Optional: Force sign out for testing (remove this line in production)
+        mAuth.signOut();
 
         // Set up delayed navigation with authentication check
         final Handler handler = new Handler();

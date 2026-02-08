@@ -21,6 +21,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import soraka.ash.eliasfinalproject.accountsAndPay;
+import soraka.ash.eliasfinalproject.goalsAbudgeting;
+import soraka.ash.eliasfinalproject.GeminiChatActivity;
+import soraka.ash.eliasfinalproject.statistics;
+
 public class MainActivity extends AppCompatActivity {
 
     private MaterialCardView btnAcc;

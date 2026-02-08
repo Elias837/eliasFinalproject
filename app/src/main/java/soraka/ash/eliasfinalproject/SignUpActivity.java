@@ -472,7 +472,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Show error in a more visible way
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         View view = toast.getView();
-        view.setBackgroundResource(android.R.drawable.toast_frame);
+        //view.setBackgroundResource(android.R.drawable.toast_frame);
         toast.show();
     }
     

@@ -1,11 +1,11 @@
 package soraka.ash.eliasfinalproject.models;
 
 /**
- * User model class for Firebase Firestore.
- * Represents a user document in the users collection.
+ * User model class for Firebase Realtime Database.
+ * Represents a user node in the users collection.
  * 
  * This class is used to serialize/deserialize user data
- * when working with Firebase Firestore database operations.
+ * when working with Firebase Realtime Database operations.
  */
 public class MyUser {
     private String userId; // معرف فريد للمستخدم(يمكن أن يكون فارغًا في البداية)

@@ -15,19 +15,10 @@ public class BudgetItem {
     private double totalAmount;
     private int progress;
 
-    /**
-     * Constructor that initializes a BudgetItem with category and amounts.
-     * Automatically calculates the progress percentage based on current and total amounts.
-     * @param category The name of the budget category
-     * @param currentAmount The amount currently spent
-     * @param totalAmount The total budget amount
-     * 
-     * المُنشئ الذي يهيئ BudgetItem بالفئة والمبالغ.
-     * يحسب تلقائياً نسبة التقدم بناءً على المبالغ الحالية والإجمالية.
-     * @param category اسم فئة الميزانية
-     * @param currentAmount المبلغ المنفق حالياً
-     * @param totalAmount المبلغ الإجمالي للميزانية
-     */
+    // Default constructor required by Firebase
+    public BudgetItem() {
+    }
+
     public BudgetItem(String category, double currentAmount, double totalAmount) {
         this.category = category;
         this.currentAmount = currentAmount;

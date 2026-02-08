@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import soraka.ash.eliasfinalproject.R;
+import soraka.ash.eliasfinalproject.goalsAbudgeting;
 import soraka.ash.eliasfinalproject.model.BudgetItem;
 
 /**
@@ -24,9 +25,11 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Constructor that initializes the adapter with a list of budget items.
-     * @param budgetItems List of BudgetItem objects to display
+     *
+     * @param goalsAbudgeting
+     * @param budgetItems     List of BudgetItem objects to display
      */
-    public BudgetAdapter(List<BudgetItem> budgetItems) {
+    public BudgetAdapter(goalsAbudgeting goalsAbudgeting, List<BudgetItem> budgetItems) {
         this.budgetItems = budgetItems;
     }
 

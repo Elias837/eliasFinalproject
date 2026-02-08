@@ -42,7 +42,6 @@ dependencies {
     implementation libs.credentials.play.services.auth
     implementation libs.googleid
     implementation libs.firebase.database
-    implementation libs.firebase.firestore// AppCompat
     
     // Gemini AI SDK
     implementation 'com.google.ai.client.generativeai:generativeai:0.7.0'

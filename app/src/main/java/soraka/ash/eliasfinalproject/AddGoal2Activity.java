@@ -12,10 +12,14 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import soraka.ash.eliasfinalproject.data.FirebaseHelper;
+import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
 /**
  * Activity for creating and saving financial goals with comprehensive validation.
@@ -33,6 +37,8 @@ public class AddGoal2Activity extends AppCompatActivity {
     private TextInputEditText notesEditText;
     private MaterialButton saveButton;
     private Calendar calendar;
+    private CircularProgressIndicator progressBar;
+    private FirebaseHelper firebaseHelper;
 
     /**
      * Called when the activity is first created. Initializes all UI components,
@@ -54,6 +60,9 @@ public class AddGoal2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_goal2);
 
+        // Initialize Firebase helper
+        firebaseHelper = new FirebaseHelper();
+
         // Initialize views
         initializeViews();
         setupToolbar();
@@ -74,6 +83,7 @@ public class AddGoal2Activity extends AppCompatActivity {
         targetDateEditText = findViewById(R.id.targetDateEditText);
         notesEditText = findViewById(R.id.notesEditText);
         saveButton = findViewById(R.id.saveButton);
+        progressBar = findViewById(R.id.progressBar);
         calendar = Calendar.getInstance();
     }
 
@@ -213,15 +223,47 @@ public class AddGoal2Activity extends AppCompatActivity {
                 return;
             }
 
-            // TODO: Save the goal to your database or perform other actions
-            // For now, just show a success message and finish the activity
-            Toast.makeText(this, "Goal saved successfully!", Toast.LENGTH_SHORT).show();
-            setResult(RESULT_OK);
-            finish();
+            // Show loading state
+            showLoading(true);
+
+            // Create financial goal object
+            FinancialGoal goal = new FinancialGoal(
+                null, // userId will be set in FirebaseHelper
+                goalName,
+                targetAmount,
+                targetDate,
+                notes
+            );
+
+            // Save to Firebase
+            firebaseHelper.saveFinancialGoal(goal,
+                aVoid -> {
+                    showLoading(false);
+                    Toast.makeText(this, "Goal saved successfully!", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
+                },
+                e -> {
+                    showLoading(false);
+                    Toast.makeText(this, "Failed to save goal: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
 
         } catch (NumberFormatException e) {
             targetAmountEditText.setError("Please enter a valid amount");
             targetAmountEditText.requestFocus();
+        }
+    }
+
+    /**
+     * Shows or hides the loading state
+     */
+    private void showLoading(boolean show) {
+        if (progressBar != null) {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+        if (saveButton != null) {
+            saveButton.setEnabled(!show);
+            saveButton.setText(show ? "Saving..." : "Save Goal");
         }
     }
 

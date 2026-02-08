@@ -342,8 +342,7 @@ public class SignUpActivity extends AppCompatActivity {
                         // Update user profile with display name
                         String displayName = firstName + " " + lastName;
                         
-                        // You can save additional user data to Firebase Firestore here
-                        // Example: saveUserProfile(user.getUid(), firstName, lastName, email);
+                        // User profile is already saved to Firebase Realtime Database in the signup process
                         
                         Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
                         
@@ -360,36 +359,7 @@ public class SignUpActivity extends AppCompatActivity {
             });
     }
 
-    /**
-     * Optional: Save additional user profile data to Firebase Firestore
-     * This method can be called from checkAndSignUp_FB after successful registration
-     * 
-     * اختياري: حفظ بيانات ملف المستخدم الإضافية إلى Firebase Firestore
-     * يمكن استدعاء هذه الطريقة من checkAndSignUp_FB بعد التسجيل الناجح
-     */
-    private void saveUserProfile(String userId, String firstName, String lastName, String email) {
-        // TODO: Implement Firebase Firestore integration to save user profile
-        // Example implementation:
-        /*
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> user = new HashMap<>();
-        user.put("firstName", firstName);
-        user.put("lastName", lastName);
-        user.put("email", email);
-        user.put("createdAt", System.currentTimeMillis());
-        user.put("accountType", "standard");
         
-        db.collection("users").document(userId)
-            .set(user)
-            .addOnSuccessListener(aVoid -> {
-                Log.d("SignUpActivity", "User profile saved successfully");
-            })
-            .addOnFailureListener(e -> {
-                Log.w("SignUpActivity", "Error saving user profile", e);
-            });
-        */
-    }
-    
     /**
      * Validates email and password for Firebase sign in.
      * Checks email format and password requirements before authentication.

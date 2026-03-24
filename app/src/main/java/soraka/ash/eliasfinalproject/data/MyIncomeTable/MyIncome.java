@@ -124,6 +124,7 @@ public class MyIncome
             return userId;
         }
 
+
         // ------------------ Setters ------------------
 
         public void setTransactionId(long transactionId) {

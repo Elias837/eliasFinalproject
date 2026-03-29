@@ -53,11 +53,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EliasFinalproject"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="true">
         <service
             android:name=".data.MyIncomeTable.MyIncomeService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="false"></service>
 
         <activity
             android:name=".statistics"
@@ -73,9 +73,9 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="false" />
@@ -91,12 +91,12 @@
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".AddGoal2Activity"
             android:exported="false"

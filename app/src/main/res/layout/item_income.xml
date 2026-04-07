@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,89 +20,82 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_money"
-            android:background="@color/colorPrimary"
-            android:padding="8dp" />
+            android:background="#E2E8F0"
+            android:padding="12dp"
+            android:src="@drawable/money_bag_icon_money_icon_design_illustration_money_bag_icon_collection_money_bag_icon_simple_sign_vector"
+            app:tint="#0F172A" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="16dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvItmTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:text="Transaction Title"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textColor="#0F172A"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvItmText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="Transaction description"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/tvItmImportance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Amount: $0.00"
-                android:textSize="14sp"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="#64748B"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical|end"
+            android:gravity="end"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imgBtnSendSmsitm"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="4dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_dialog_email"
-                android:contentDescription="Send SMS" />
+            <TextView
+                android:id="@+id/tvItmImportance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="$0.00"
+                android:textColor="#0F172A"
+                android:textSize="16sp" />
 
-            <ImageButton
-                android:id="@+id/imgBtnEdititm"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="4dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_edit"
-                android:contentDescription="Edit" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imgBtnCallitm"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="4dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_call"
-                android:contentDescription="Call" />
+                <ImageButton
+                    android:id="@+id/imgBtnEdititm"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Edit"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_edit"
+                    app:tint="#64748B" />
 
-            <ImageButton
-                android:id="@+id/imgBtnDeleteitm"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_delete"
-                android:contentDescription="Delete" />
+                <ImageButton
+                    android:id="@+id/imgBtnDeleteitm"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Delete"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_delete"
+                    app:tint="#EF4444" />
 
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

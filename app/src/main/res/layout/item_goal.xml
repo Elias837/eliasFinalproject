@@ -1,86 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="#FFFFFF">
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Goal Icon -->
         <ImageView
             android:id="@+id/goalIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="Goal icon"
-            android:padding="8dp"
-            android:background="#EFF6FF"
-            android:tint="#4A6CF7"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#F1F5F9"
+            android:padding="12dp"
+            android:src="@drawable/money_bag_icon_money_icon_design_illustration_money_bag_icon_collection_money_bag_icon_simple_sign_vector"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="#EFF6FF"/>
+            app:tint="#0F172A" />
 
-        <!-- Goal Title -->
         <TextView
             android:id="@+id/goalTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="New Car"
-            android:textColor="#1E293B"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="sans-serif-black"
+            android:text="Financial Goal"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/goalPercentage"
             app:layout_constraintStart_toEndOf="@id/goalIcon"
             app:layout_constraintTop_toTopOf="@id/goalIcon" />
 
-        <!-- Goal Progress Text -->
         <TextView
             android:id="@+id/goalProgressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="$2,500 / $10,000"
+            android:text="$0 / $0"
             android:textColor="#64748B"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/goalTitle"
             app:layout_constraintTop_toBottomOf="@id/goalTitle" />
 
-        <!-- Progress Bar -->
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/goalProgressBar"
-            style="@style/Widget.MaterialComponents.LinearProgressIndicator"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:layout_marginTop="12dp"
-            android:progress="25"
-            android:progressTint="#4A6CF7"
-            android:progressBackgroundTint="#E2E8F0"
-            app:layout_constraintEnd_toEndOf="@id/goalTitle"
-            app:layout_constraintStart_toStartOf="@id/goalTitle"
-            app:layout_constraintTop_toBottomOf="@id/goalProgressText"
-            app:trackCornerRadius="4dp" />
-
-        <!-- Progress Percentage -->
         <TextView
             android:id="@+id/goalPercentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="25%"
-            android:textColor="#4A6CF7"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/goalProgressBar"
-            app:layout_constraintTop_toBottomOf="@id/goalProgressBar" />
+            android:fontFamily="sans-serif-medium"
+            android:text="0%"
+            android:textColor="#0F172A"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/goalTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/goalTitle" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/goalProgressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:indicatorColor="#0F172A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/goalIcon"
+            app:trackColor="#E2E8F0"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="8dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/goalProgressBar">
+
+            <ImageButton
+                android:id="@+id/btnEditGoal"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="#64748B" />
+
+            <ImageButton
+                android:id="@+id/btnDeleteGoal"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_delete"
+                app:tint="#EF4444" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

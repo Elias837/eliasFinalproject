@@ -2,27 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.location"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.microphone"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
         android:maxSdkVersion="32" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -49,33 +39,26 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EliasFinalproject"
-        android:usesCleartextTraffic="true">
-        <service
-            android:name=".data.MyIncomeTable.MyIncomeService"
-            android:enabled="true"
-            android:exported="false"></service>
-
-        <activity
-            android:name=".statistics"
-            android:exported="false" />
-        <activity
-            android:name=".AIinsights"
-            android:exported="false" />
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="false">
+        
+        <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".UserProfileActivity" android:exported="false" />
+        <activity android:name=".TransactionHistoryActivity" android:exported="false" />
+        <activity android:name=".EditGoalActivity" android:exported="false" />
+        <activity android:name=".ForgotPasswordActivity" android:exported="false" />
+        
         <activity
             android:name=".goalsAbudgeting"
             android:exported="false" />
         <activity
-            android:name=".accountsAndPay"
-            android:exported="false" />
-        <activity
             android:name=".SignUpActivity"
+            android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Login"
             android:exported="false" />
@@ -85,26 +68,29 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:exported="false"></activity>
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".AddGoal2Activity"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".GeminiChatActivity"
+            android:name=".AiInsights"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".AddTransactionActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

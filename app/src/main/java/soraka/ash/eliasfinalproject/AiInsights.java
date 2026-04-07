@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import soraka.ash.eliasfinalproject.data.GeminiHelper;
 import soraka.ash.eliasfinalproject.data.ResponseCallback;
 
-public class GeminiChatActivity extends AppCompatActivity {
+public class AiInsights extends AppCompatActivity {
     private EditText inputEditText;
     private Button sendButton;
     private Button financialAdviceButton;
@@ -21,7 +21,7 @@ public class GeminiChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gemini_chat);
+        setContentView(R.layout.ai_insights);
 
         inputEditText = findViewById(R.id.inputEditText);
         sendButton = findViewById(R.id.sendButton);
@@ -38,7 +38,7 @@ public class GeminiChatActivity extends AppCompatActivity {
                 if (!userInput.isEmpty()) {
                     generateResponse(userInput);
                 } else {
-                    Toast.makeText(GeminiChatActivity.this, "Please enter text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AiInsights.this, "Please enter text", Toast.LENGTH_SHORT).show();
                 }
             }
         });

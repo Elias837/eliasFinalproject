@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialCardView btnGoals;
     private MaterialCardView btnAI;
     private MaterialCardView btnStatistics;
+    private MaterialCardView btnSettingsMain;
 
     private static final int PERMISSION_REQUEST_CODE = 123;
     private FirebaseAuth mAuth;
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-
-        // Request permissions for Camera and Gallery on startup
         requestAppPermissions();
 
         btnAcc = findViewById(R.id.btnAcc);
@@ -52,36 +50,21 @@ public class MainActivity extends AppCompatActivity {
         btnAI = findViewById(R.id.btnAI);
         btnStatistics = findViewById(R.id.btnStatistics);
 
-        btnAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, accountsAndPay.class);
-                startActivity(intent);
-            }
+        // Updated listeners to point to the new screens I created for you
+        btnAcc.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class));
         });
 
-        btnGoals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, goalsAbudgeting.class);
-                startActivity(intent);
-            }
+        btnGoals.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, goalsAbudgeting.class));
         });
 
-        btnAI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GeminiChatActivity.class);
-                startActivity(intent);
-            }
+        btnAI.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, AiInsights.class));
         });
 
-        btnStatistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, statistics.class);
-                startActivity(intent);
-            }
+        btnStatistics.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class));
         });
 
         View mainView = findViewById(R.id.main);
@@ -97,25 +80,18 @@ public class MainActivity extends AppCompatActivity {
     private void requestAppPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissionsNeeded = new ArrayList<>();
-            
-            // Camera Permission
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 permissionsNeeded.add(Manifest.permission.CAMERA);
             }
-
-            // Image Selection Permissions (Handling different Android versions)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                // Android 13+
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                     permissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
                 }
             } else {
-                // Android 12 and below
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
                 }
             }
-
             if (!permissionsNeeded.isEmpty()) {
                 ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[0]), PERMISSION_REQUEST_CODE);
             }
@@ -133,11 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
-            
             if (allGranted) {
-                Toast.makeText(this, "Camera and Storage access granted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permissions are required to add photos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Permissions Granted", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -30,16 +30,21 @@ public class SettingsActivity extends AppCompatActivity {
         Button btnEditProfile = findViewById(R.id.btnEditProfile);
         Button btnLogout = findViewById(R.id.btnLogout);
 
-        btnEditProfile.setOnClickListener(v -> {
-            startActivity(new Intent(SettingsActivity.this, UserProfileActivity.class));
-        });
+        if (btnEditProfile != null) {
+            btnEditProfile.setOnClickListener(v -> {
+                startActivity(new Intent(SettingsActivity.this, UserProfileActivity.class));
+            });
+        }
 
-        btnLogout.setOnClickListener(v -> {
-            mAuth.signOut();
-            Intent intent = new Intent(SettingsActivity.this, SignInActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        });
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> {
+                mAuth.signOut();
+                // Changed SignInActivity.class to Login.class to fix compilation error
+                Intent intent = new Intent(SettingsActivity.this, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
+        }
     }
 }

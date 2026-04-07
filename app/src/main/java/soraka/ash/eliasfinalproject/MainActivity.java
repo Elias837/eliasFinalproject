@@ -26,15 +26,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MaterialCardView btnAcc;
-    private MaterialCardView btnGoals;
-    private MaterialCardView btnAI;
-    private MaterialCardView btnStatistics;
-    private MaterialCardView btnSettingsMain;
-
-    private static final int PERMISSION_REQUEST_CODE = 123;
-    private FirebaseAuth mAuth;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +33,29 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
         requestAppPermissions();
 
-        btnAcc = findViewById(R.id.btnAcc);
-        btnGoals = findViewById(R.id.btnGoals);
-        btnAI = findViewById(R.id.btnAI);
-        btnStatistics = findViewById(R.id.btnStatistics);
+        MaterialCardView btnAcc = findViewById(R.id.btnAcc);
+        MaterialCardView btnGoals = findViewById(R.id.btnGoals);
+        MaterialCardView btnAI = findViewById(R.id.btnAI);
+        MaterialCardView btnStatistics = findViewById(R.id.btnStatistics);
 
-        // Updated listeners to point to the new screens I created for you
-        btnAcc.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class));
-        });
+        if (btnAcc != null) {
+            btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class)));
+        }
 
-        btnGoals.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, goalsAbudgeting.class));
-        });
+        if (btnGoals != null) {
+            btnGoals.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, goalsAbudgeting.class)));
+        }
 
-        btnAI.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, AiInsights.class));
-        });
+        if (btnAI != null) {
+            // Corrected: Pointing to AiInsights instead of the missing GeminiChatActivity
+            btnAI.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AiInsights.class)));
+        }
 
-        btnStatistics.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class));
-        });
+        if (btnStatistics != null) {
+            btnStatistics.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, statistics.class)));
+        }
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -97,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private static final int PERMISSION_REQUEST_CODE = 123;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

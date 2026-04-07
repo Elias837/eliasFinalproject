@@ -63,7 +63,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     // User not signed in, go to SignInActivity
-                    Intent intent = new Intent(SplashScreenActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.this, SignUpActivity.class);
                     startActivity(intent);
                 }
                 finish();

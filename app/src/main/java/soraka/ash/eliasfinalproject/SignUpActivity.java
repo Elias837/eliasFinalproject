@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView titleText, subtitleText, loginText;
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final String TAG = "SignUpActivity";
+    private View FirstNameEditText;
 
     /**
      * Called when the activity is first created. Initializes all UI components,
@@ -76,14 +77,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         // Initialize views
-        firstNameEditText = findViewById(R.id.firstNameEditText);
-        lastNameEditText = findViewById(R.id.lastNameEditText);
+        FirstNameEditText = findViewById(R.id.fullNameEditText);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         
-        firstNameLayout = findViewById(R.id.firstNameLayout);
-        lastNameLayout = findViewById(R.id.lastNameLayout);
+        firstNameLayout = findViewById(R.id.fullNameLayout);
         emailLayout = findViewById(R.id.emailLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
         confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);

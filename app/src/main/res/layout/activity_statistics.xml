@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1F5F9"
@@ -169,6 +170,7 @@
                     android:gravity="bottom|center_horizontal"
                     android:orientation="vertical">
                     <View
+                        android:id="@+id/barJan"
                         android:layout_width="16dp"
                         android:layout_height="120dp"
                         android:background="#0F172A"
@@ -190,6 +192,7 @@
                     android:gravity="bottom|center_horizontal"
                     android:orientation="vertical">
                     <View
+                        android:id="@+id/barFeb"
                         android:layout_width="16dp"
                         android:layout_height="80dp"
                         android:background="#0F172A"
@@ -211,6 +214,7 @@
                     android:gravity="bottom|center_horizontal"
                     android:orientation="vertical">
                     <View
+                        android:id="@+id/barMar"
                         android:layout_width="16dp"
                         android:layout_height="150dp"
                         android:background="#0F172A" />
@@ -231,6 +235,7 @@
                     android:gravity="bottom|center_horizontal"
                     android:orientation="vertical">
                     <View
+                        android:id="@+id/barApr"
                         android:layout_width="16dp"
                         android:layout_height="100dp"
                         android:background="#0F172A"
@@ -279,12 +284,14 @@
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/tvLabelFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Food &amp; Dining (40%)"
                     android:textColor="#0F172A"
                     android:textSize="14sp" />
                 <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressFood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -295,6 +302,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
+                    android:id="@+id/tvLabelRent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -302,6 +310,7 @@
                     android:textColor="#0F172A"
                     android:textSize="14sp" />
                 <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressRent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

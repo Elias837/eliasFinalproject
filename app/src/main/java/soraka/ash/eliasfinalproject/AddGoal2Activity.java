@@ -8,6 +8,8 @@ import soraka.ash.eliasfinalproject.models.FinancialGoal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AddGoal2Activity extends AppCompatActivity {
 
@@ -47,7 +49,7 @@ public class AddGoal2Activity extends AppCompatActivity {
             return;
         }
 
-        String userId = FirebaseAuth.getInstance().getUid();
+
         double amount;
         try {
             amount = Double.parseDouble(amountStr);
@@ -55,12 +57,26 @@ public class AddGoal2Activity extends AppCompatActivity {
             Toast.makeText(this, "Invalid amount format", Toast.LENGTH_SHORT).show();
             return;
         }
-        
+        String userId = FirebaseAuth.getInstance().getUid();
         FinancialGoal goal = new FinancialGoal(userId, title, amount, date, notes);
 
-        firebaseHelper.save("goals", goal);
+        saveGoalToFirebase(goal);
         
         Toast.makeText(this, "Goal Saved!", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+
+    private void saveGoalToFirebase(FinancialGoal goal) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(FirebaseHelper.GOALS_NODE);
+
+        ref.child(goal.getGoalId()).setValue(goal).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Goal Saved!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to save goal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

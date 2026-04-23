@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import soraka.ash.eliasfinalproject.data.FirebaseHelper;
 import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
@@ -68,15 +71,39 @@ public class EditGoalActivity extends AppCompatActivity {
             return;
         }
 
-        firebaseHelper.update("goals", currentGoal.getGoalId(), currentGoal);
+       updateGoalToFirebase(currentGoal);
         Toast.makeText(this, "Goal Updated", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     private void deleteGoal() {
         if (currentGoal == null) return;
-        firebaseHelper.update("goals", currentGoal.getGoalId(), null);
-        Toast.makeText(this, "Goal Deleted", Toast.LENGTH_SHORT).show();
-        finish();
+       deleteGoalToFirebase(currentGoal);
+
     }
+    private void updateGoalToFirebase(FinancialGoal goal) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(FirebaseHelper.GOALS_NODE);
+
+        ref.child(goal.getGoalId()).setValue(goal).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Goal updated!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to update goal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void deleteGoalToFirebase(FinancialGoal goal) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(FirebaseHelper.GOALS_NODE);
+
+        ref.child(goal.getGoalId()).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Goal deleted!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to delete goal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

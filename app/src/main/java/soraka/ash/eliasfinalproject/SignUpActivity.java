@@ -142,11 +142,11 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private void attemptSignUp() {
         // Check if EditText fields are initialized
-        if (firstNameEditText == null || lastNameEditText == null || 
-            emailEditText == null || passwordEditText == null || confirmPasswordEditText == null) {
-            Toast.makeText(this, "UI elements not initialized", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (firstNameEditText == null || lastNameEditText == null ||
+//            emailEditText == null || passwordEditText == null || confirmPasswordEditText == null) {
+//            Toast.makeText(this, "UI elements not initialized", Toast.LENGTH_SHORT).show();
+//            return;
+      //  }
 
         // Reset errors
         if (firstNameLayout != null) firstNameLayout.setError(null);
@@ -155,8 +155,8 @@ public class SignUpActivity extends AppCompatActivity {
         if (passwordLayout != null) passwordLayout.setError(null);
         if (confirmPasswordLayout != null) confirmPasswordLayout.setError(null);
 
-        String firstName = firstNameEditText.getText().toString().trim();
-        String lastName = lastNameEditText.getText().toString().trim();
+//        String firstName = firstNameEditText.getText().toString().trim();
+//        String lastName = lastNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
@@ -164,16 +164,16 @@ public class SignUpActivity extends AppCompatActivity {
         boolean isValid = true;
 
         // First name validation
-        if (TextUtils.isEmpty(firstName)) {
-            if (firstNameLayout != null) firstNameLayout.setError("First name is required");
-            isValid = false;
-        }
-
-        // Last name validation
-        if (TextUtils.isEmpty(lastName)) {
-            if (lastNameLayout != null) lastNameLayout.setError("Last name is required");
-            isValid = false;
-        }
+//        if (TextUtils.isEmpty(firstName)) {
+//            if (firstNameLayout != null) firstNameLayout.setError("First name is required");
+//            isValid = false;
+//        }
+//
+//        // Last name validation
+//        if (TextUtils.isEmpty(lastName)) {
+//            if (lastNameLayout != null) lastNameLayout.setError("Last name is required");
+//            isValid = false;
+//        }
 
         // Email validation
         if (TextUtils.isEmpty(email)) {
@@ -184,7 +184,7 @@ public class SignUpActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        // Password validation
+        // Password validation0
         if (TextUtils.isEmpty(password)) {
             if (passwordLayout != null) passwordLayout.setError("Password is required");
             isValid = false;

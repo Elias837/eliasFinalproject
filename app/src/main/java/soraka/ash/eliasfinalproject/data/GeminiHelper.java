@@ -1,38 +1,33 @@
 package soraka.ash.eliasfinalproject.data;
 
-import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.ai.client.generativeai.GenerativeModel;
+import com.google.ai.client.generativeai.java.GenerativeModelFutures;
+import com.google.ai.client.generativeai.type.Content;
 import com.google.ai.client.generativeai.type.GenerateContentResponse;
-import kotlin.Result;
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
-import kotlin.coroutines.EmptyCoroutineContext;
+//import com.google.common.util.concurrent.FutureCallback;
+//import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+/**
+ * Helper class for Gemini AI integration.
+ */
 public class GeminiHelper {
-    public static final String GEMINI_Version = "gemini-2.0-flash";
-    private static String GEMINI_API_KEY = "AIzaSyDummyKeyForTesting123456789";
+    private static final String TAG = "GeminiHelper";
+    // WARNING: Replace with your actual Gemini API Key from Google AI Studio
+    private static final String GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
     private static GeminiHelper instance;
-    private GenerativeModel gemini;
+    private final GenerativeModelFutures model;
+    private final Executor executor;
 
     private GeminiHelper() {
-        if (GEMINI_API_KEY == null || GEMINI_API_KEY.equals("YOUR_GEMINI_API_KEY_HERE") || GEMINI_API_KEY.contains("DummyKey") || GEMINI_API_KEY.trim().isEmpty()) {
-            Log.w("GeminiHelper", "API key not configured. Please set a valid Gemini API key in GeminiHelper.java");
-            gemini = null;
-            return;
-        }
-        
-        try {
-            gemini = new GenerativeModel(
-                    GEMINI_Version,
-                    GEMINI_API_KEY
-            );
-            Log.d("GeminiHelper", "Gemini model initialized successfully");
-        } catch (Exception e) {
-            Log.e("GeminiHelper", "Failed to initialize Gemini model: " + e.getMessage(), e);
-            gemini = null;
-        }
+        GenerativeModel gm = new GenerativeModel("gemini-1.5-flash", GEMINI_API_KEY);
+        model = GenerativeModelFutures.from(gm);
+        executor = Executors.newSingleThreadExecutor();
     }
 
     public static synchronized GeminiHelper getInstance() {
@@ -42,45 +37,30 @@ public class GeminiHelper {
         return instance;
     }
 
-    public void sendMessage(String prompt, ResponseCallback callback) {
-        if (prompt == null || prompt.trim().isEmpty()) {
-            callback.onError(new IllegalArgumentException("Prompt cannot be empty"));
+    public void sendMessage(String message, ResponseCallback callback) {
+        if (GEMINI_API_KEY.equals("YOUR_GEMINI_API_KEY_HERE")) {
+            callback.onError(new Exception("API Key not configured. Please add your Gemini API Key in GeminiHelper.java"));
             return;
         }
-        
-        if (gemini == null) {
-            callback.onError(new IllegalStateException("Gemini model not initialized. Please check API key configuration."));
-            return;
-        }
-        
-        Log.d("GeminiHelper", "Sending message to Gemini: " + prompt.substring(0, Math.min(50, prompt.length())) + "...");
-        
-        try {
-            gemini.generateContent(prompt,
-                    new Continuation<GenerateContentResponse>() {
-                        @NonNull
-                        @Override
-                        public CoroutineContext getContext() {
-                            return EmptyCoroutineContext.INSTANCE;
-                        }
 
-                        @Override
-                        public void resumeWith(@NonNull Object result) {
-                            if (result instanceof Result.Failure) {
-                                Throwable throwable = ((Result.Failure) result).exception;
-                                Log.e("GeminiHelper", "Gemini API call failed: " + throwable.getMessage(), throwable);
-                                callback.onError(throwable);
-                            } else {
-                                String response = ((GenerateContentResponse) result).getText();
-                                Log.d("GeminiHelper", "Gemini response received successfully");
-                                callback.onResponse(response);
-                            }
-                        }
-                    }
-            );
-        } catch (Exception e) {
-            Log.e("GeminiHelper", "Exception during Gemini API call: " + e.getMessage(), e);
-            callback.onError(e);
-        }
+        Content content = new Content.Builder()
+                .addText(message)
+                .build();
+
+        ListenableFuture<GenerateContentResponse> response = model.generateContent(content);
+//
+//        Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
+//            @Override
+//            public void onSuccess(GenerateContentResponse result) {
+//                String resultText = result.getText();
+//                callback.onResponse(resultText);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                Log.e(TAG, "Error sending message to Gemini", t);
+//                callback.onError(t);
+//            }
+//        }, executor);
     }
 }

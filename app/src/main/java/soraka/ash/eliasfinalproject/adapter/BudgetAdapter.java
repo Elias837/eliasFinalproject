@@ -14,6 +14,7 @@ import java.util.List;
 import soraka.ash.eliasfinalproject.R;
 import soraka.ash.eliasfinalproject.goalsAbudgeting;
 import soraka.ash.eliasfinalproject.model.BudgetItem;
+import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
 /**
  * RecyclerView adapter for displaying budget items in a list.
@@ -21,7 +22,7 @@ import soraka.ash.eliasfinalproject.model.BudgetItem;
  * Provides methods to update the budget items list dynamically.
  */
 public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetViewHolder> {
-    private List<BudgetItem> budgetItems;
+    private List<FinancialGoal> budgetItems;
 
     /**
      * Constructor that initializes the adapter with a list of budget items.
@@ -29,7 +30,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
      * @param goalsAbudgeting
      * @param budgetItems     List of BudgetItem objects to display
      */
-    public BudgetAdapter(goalsAbudgeting goalsAbudgeting, List<BudgetItem> budgetItems) {
+    public BudgetAdapter(goalsAbudgeting goalsAbudgeting, List<FinancialGoal> budgetItems) {
         this.budgetItems = budgetItems;
     }
 
@@ -56,7 +57,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
      */
     @Override
     public void onBindViewHolder(@NonNull BudgetViewHolder holder, int position) {
-        BudgetItem item = budgetItems.get(position);
+        FinancialGoal item = budgetItems.get(position);
         holder.bind(item);
     }
 
@@ -73,7 +74,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
      * Updates the budget items list and notifies the adapter to refresh the display.
      * @param newItems The new list of BudgetItem objects to display
      */
-    public void updateBudgetItems(List<BudgetItem> newItems) {
+    public void updateBudgetItems(List<FinancialGoal> newItems) {
         this.budgetItems = newItems;
         notifyDataSetChanged();
     }
@@ -103,13 +104,13 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
          * Sets the category text, amount text, and progress bar values.
          * @param item The BudgetItem object containing the data to display
          */
-        public void bind(BudgetItem item) {
-            categoryText.setText(item.getCategory());
+        public void bind(FinancialGoal item) {
+            categoryText.setText(item.getGoalName());
             String amountTextStr = String.format("$%.2f / $%.2f", 
                 item.getCurrentAmount(), 
-                item.getTotalAmount());
+                item.getTargetAmount());
             amountText.setText(amountTextStr);
-            progressBar.setProgress(item.getProgress());
+            progressBar.setProgress((int) item.getProgressPercentage());
         }
     }
 }

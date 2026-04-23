@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class goalsAbudgeting extends AppCompatActivity {
     private FloatingActionButton addGoalFab;
     private RecyclerView goalsRecyclerView;
     private BudgetAdapter budgetAdapter;
-    private List<BudgetItem> budgetItemList;
+    private List<FinancialGoal> budgetItemList;
     private FirebaseHelper firebaseHelper;
 
     @Override
@@ -58,29 +59,23 @@ public class goalsAbudgeting extends AppCompatActivity {
     }
 
     private void loadGoalsFromFirebase() {
-        firebaseHelper.get("goals", new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(FirebaseHelper.GOALS_NODE).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 budgetItemList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    FinancialGoal goal = snapshot.getValue(FinancialGoal.class);
+                for (DataSnapshot goalSnapshot : snapshot.getChildren()) {
+                    FinancialGoal goal = goalSnapshot.getValue(FinancialGoal.class);
                     if (goal != null) {
-                        // Corrected: Using getGoalName() instead of getTitle()
-                        String name = goal.getGoalName() != null ? goal.getGoalName() : "Goal";
-                        BudgetItem budgetItem = new BudgetItem(
-                            name,
-                            goal.getCurrentAmount(),
-                            goal.getTargetAmount()
-                        );
-                        budgetItemList.add(budgetItem);
+                        budgetItemList.add(goal);
                     }
                 }
+                budgetAdapter.updateBudgetItems(budgetItemList);
                 budgetAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("goalsAbudgeting", "Error: " + databaseError.getMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("goalsAbudgeting", "Failed to load goals from Firebase", error.toException());
             }
         });
     }

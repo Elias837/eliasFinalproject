@@ -45,7 +45,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
     @Override
     public BudgetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_budget, parent, false);
+                .inflate(R.layout.activity_goals_budgeting, parent, false);
         return new BudgetViewHolder(view);
     }
 
@@ -84,9 +84,9 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
      * Extends RecyclerView.ViewHolder and provides binding functionality.
      */
     static class BudgetViewHolder extends RecyclerView.ViewHolder {
-        private final TextView categoryText;
-        private final TextView amountText;
-        private final ProgressBar progressBar;
+        //private final TextView categoryText;
+       // private final TextView amountText;
+       // private final ProgressBar progressBar;
 
         /**
          * Constructor that initializes the ViewHolder and finds all view references.
@@ -94,9 +94,9 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
          */
         public BudgetViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryText = itemView.findViewById(R.id.budgetCategory);
-            amountText = itemView.findViewById(R.id.budgetAmount);
-            progressBar = itemView.findViewById(R.id.budgetProgressBar);
+            //categoryText = itemView.findViewById(R.id.budgetCategory);
+            //amountText = itemView.findViewById(R.id.budgetAmount);
+            //progressBar = itemView.findViewById(R.id.budgetProgressBar);
         }
 
         /**
@@ -105,12 +105,12 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
          * @param item The BudgetItem object containing the data to display
          */
         public void bind(FinancialGoal item) {
-            categoryText.setText(item.getGoalName());
+            //categoryText.setText(item.getGoalName());
             String amountTextStr = String.format("$%.2f / $%.2f", 
-                item.getCurrentAmount(), 
+                item.getCurrentAmount(),
                 item.getTargetAmount());
-            amountText.setText(amountTextStr);
-            progressBar.setProgress((int) item.getProgressPercentage());
+            //amountText.setText(amountTextStr);
+            //progressBar.setProgress((int) item.getProgressPercentage());
         }
     }
 }

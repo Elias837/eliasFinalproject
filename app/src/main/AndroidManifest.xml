@@ -84,7 +84,7 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".AddTransactionActivity"
+            android:name=".accountsAndPay"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:exported="false"
             tools:ignore="Instantiatable" />

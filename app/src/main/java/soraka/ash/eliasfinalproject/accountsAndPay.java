@@ -47,8 +47,8 @@ public class accountsAndPay extends AppCompatActivity {
     private void setupClickListeners() {
         if (addTransactionFab != null) {
             addTransactionFab.setOnClickListener(v -> {
-                Intent intent = new Intent(accountsAndPay.this, AddTransactionActivity.class);
-                startActivity(intent);
+              //  Intent intent = new Intent(accountsAndPay.this, AddTransactionActivity.class);
+               // startActivity(intent);
             });
         }
 

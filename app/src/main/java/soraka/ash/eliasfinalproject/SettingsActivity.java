@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (btnEditProfile != null) {
             btnEditProfile.setOnClickListener(v -> {
-                startActivity(new Intent(SettingsActivity.this, UserProfileActivity.class));
+                startActivity(new Intent(SettingsActivity.this, goalsAbudgeting.class));
             });
         }
 

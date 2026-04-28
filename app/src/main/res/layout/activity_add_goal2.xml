@@ -139,17 +139,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/saveFab"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/accent_coral"
-        android:text="Save Goal"
-        android:textColor="@color/button_text"
-        app:icon="@drawable/ic_save"
-        app:iconTint="@color/button_text" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

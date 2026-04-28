@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -39,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView btnGoals = findViewById(R.id.btnGoals);
         MaterialCardView btnAI = findViewById(R.id.btnAI);
         MaterialCardView btnStatistics = findViewById(R.id.btnStatistics);
+        ImageButton btnSettings = findViewById(R.id.btnSettings);
 
         if (btnAcc != null) {
-            btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TransactionHistoryActivity.class)));
+            btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, accountsAndPay.class)));
         }
 
         if (btnGoals != null) {
@@ -49,12 +51,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (btnAI != null) {
-            // Corrected: Pointing to AiInsights instead of the missing GeminiChatActivity
             btnAI.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AiInsights.class)));
         }
 
         if (btnStatistics != null) {
             btnStatistics.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, statistics.class)));
+        }
+
+        if (btnSettings != null) {
+            btnSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            });
         }
 
         View mainView = findViewById(R.id.main);

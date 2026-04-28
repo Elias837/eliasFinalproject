@@ -18,8 +18,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Accounts"
-            app:titleTextColor="#0F172A" />
+            app:title="Accounts &amp; Payments"
+            app:titleTextColor="#0F172A"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -38,6 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#0F172A"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp">
@@ -56,13 +59,23 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/tvTotalBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="$12,450.00"
+                        android:text="$0.00"
                         android:textColor="@color/white"
                         android:textSize="32sp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Tap to Add Funds"
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp"
+                        android:alpha="0.8" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -88,14 +101,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Income"
+                            android:text="Total Income"
                             android:textColor="#64748B" />
 
                         <TextView
+                            android:id="@+id/tvIncomeAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="+$5,200"
+                            android:text="+$0.00"
                             android:textColor="#10B981"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -118,14 +132,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Expenses"
+                            android:text="Total Expenses"
                             android:textColor="#64748B" />
 
                         <TextView
+                            android:id="@+id/tvExpenseAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="-$2,100"
+                            android:text="-$0.00"
                             android:textColor="#EF4444"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -134,15 +149,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addTransactionFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="#0F172A"
-        android:src="@android:drawable/ic_input_add"
-        app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

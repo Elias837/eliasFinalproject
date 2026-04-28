@@ -72,11 +72,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignInActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
@@ -90,7 +85,13 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".AddTransactionActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".statistics"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
     </application>
 
 </manifest>

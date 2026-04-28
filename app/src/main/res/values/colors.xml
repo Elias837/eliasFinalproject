@@ -8,4 +8,16 @@
     <color name="colorPrimary">#FF6200EE</color>
     <color name="colorPrimaryDark">#FF3700B3</color>
     <color name="colorAccent">#FF03DAC5</color>
+
+    <!-- Professional Palette: White, Black, Grey, Navy Blue -->
+    <color name="warm_background">#FFFFFFFF</color>
+    <color name="soft_surface">#FFF8F9FA</color>
+    <color name="text_primary">#FF212529</color>
+    <color name="text_secondary">#FF6C757D</color>
+    <color name="card_bg">#FFFFFFFF</color>
+    <color name="input_bg">#FFFFFFFF</color>
+    <color name="accent_teal">#FF1E3A5F</color>
+    <color name="accent_coral">#FF2C5282</color>
+    <color name="button_text">#FFFFFFFF</color>
+    <color name="button_text_light">#FF1A1A1A</color>
 </resources>

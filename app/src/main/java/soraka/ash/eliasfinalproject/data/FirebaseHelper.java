@@ -36,6 +36,9 @@ public class FirebaseHelper {
         mAuth = FirebaseAuth.getInstance();
     }
 
+    public void get(String transactions, ValueEventListener valueEventListener) {
+    }
+
 //    /**
 //     * Gets the current user ID or null if not authenticated
 //     */

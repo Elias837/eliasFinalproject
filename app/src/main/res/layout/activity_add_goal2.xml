@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/warm_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -20,7 +20,7 @@
             app:navigationIcon="@drawable/ic_arrow_back"
             app:title="New Goal"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/text_primary"
             android:elevation="0dp"/>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,8 +45,8 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Goal Name"
                 app:startIconDrawable="@drawable/ic_goal"
-                app:boxStrokeColor="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary">
+                app:boxStrokeColor="@color/accent_teal"
+                app:hintTextColor="@color/text_secondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/goalNameEditText"
@@ -65,9 +65,9 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Target Amount"
                 app:startIconDrawable="@drawable/ic_money"
-                app:startIconTint="@color/colorPrimary"
+                app:startIconTint="@color/accent_teal"
                 app:prefixText="$ "
-                app:prefixTextColor="@color/colorPrimary">
+                app:prefixTextColor="@color/text_secondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/targetAmountEditText"
@@ -86,7 +86,7 @@
                 android:layout_marginBottom="24dp"
                 android:hint="Target Date"
                 app:startIconDrawable="@drawable/ic_calendar"
-                app:startIconTint="@color/colorPrimary"
+                app:startIconTint="@color/accent_teal"
                 android:focusable="false"
                 android:clickable="true">
 
@@ -108,7 +108,7 @@
                 android:layout_marginBottom="24dp"
                 android:hint="Notes (Optional)"
                 app:startIconDrawable="@drawable/ic_notes"
-                app:startIconTint="@color/colorPrimary">
+                app:startIconTint="@color/accent_teal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/notesEditText"
@@ -127,11 +127,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/accent_teal"
                 android:paddingVertical="12dp"
                 android:text="SAVE GOAL"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/button_text"
                 android:textSize="16sp"
                 app:cornerRadius="8dp"
                 app:elevation="2dp" />
@@ -146,10 +146,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/accent_coral"
         android:text="Save Goal"
-        android:textColor="@android:color/white"
+        android:textColor="@color/button_text"
         app:icon="@drawable/ic_save"
-        app:iconTint="@android:color/white" />
+        app:iconTint="@color/button_text" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

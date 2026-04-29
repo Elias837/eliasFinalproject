@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F5F9">
+    android:background="#F1F5F9"
+    tools:context=".SplashScreenActivity">
 
     <!-- Logo Container -->
     <LinearLayout
@@ -20,38 +21,40 @@
         app:layout_constraintVertical_bias="0.45">
 
         <ImageView
-            android:id="@+id/iv1"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/money_bag_icon_money_icon_design_illustration_money_bag_icon_collection_money_bag_icon_simple_sign_vector" />
+            android:id="@+id/ivSplashLogo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@mipmap/ic_launcher_round"
+            android:elevation="8dp" />
 
         <TextView
-            android:id="@+id/tv7"
+            android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="sans-serif-black"
             android:text="PennyWise"
             android:textColor="#0F172A"
-            android:textSize="32sp" />
+            android:textSize="36sp"
+            android:letterSpacing="0.05" />
 
         <TextView
-            android:id="@+id/tv2"
+            android:id="@+id/tvSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
             android:text="Spend your money wisely"
             android:textColor="#64748B"
             android:textSize="14sp"
-            android:letterSpacing="0.1"
+            android:letterSpacing="0.2"
             android:textAllCaps="true" />
 
     </LinearLayout>
 
     <!-- Bottom Loading -->
     <ProgressBar
-        android:id="@+id/pb1"
+        android:id="@+id/pbLoading"
         style="?android:attr/progressBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +71,7 @@
         android:text="Your Secure Finance Assistant"
         android:textColor="#94A3B8"
         android:textSize="12sp"
+        android:letterSpacing="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

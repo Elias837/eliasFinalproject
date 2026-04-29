@@ -3,11 +3,13 @@ package soraka.ash.eliasfinalproject;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,12 +22,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView welcomeText;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         requestAppPermissions();
 
+        welcomeText = findViewById(R.id.welcomeText);
+        updateGreeting();
+
         MaterialCardView btnAcc = findViewById(R.id.btnAcc);
         MaterialCardView btnGoals = findViewById(R.id.btnGoals);
         MaterialCardView btnAI = findViewById(R.id.btnAI);
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btnSettings = findViewById(R.id.btnSettings);
 
         if (btnAcc != null) {
-            btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, accountsAndPay.class)));
+            btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, budgetSummary.class)));
         }
 
         if (btnGoals != null) {
@@ -75,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateGreeting() {
+        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        String name = prefs.getString("user_name", "User");
+        if (welcomeText != null) {
+            welcomeText.setText("Hello, " + name + "!");
+        }
+    }
+
     private void requestAppPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissionsNeeded = new ArrayList<>();
@@ -84,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                     permissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
+                }
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    permissionsNeeded.add(Manifest.permission.POST_NOTIFICATIONS);
                 }
             } else {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

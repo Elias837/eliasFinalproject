@@ -25,18 +25,54 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
+/**
+ * Activity for user registration and initial budget setup.
+ * Handles form validation, Firebase account creation, and local data persistence.
+ *
+ * نشاط لتسجيل المستخدم وإعداد الميزانية الأولية.
+ * يتعامل مع التحقق من النموذج، إنشاء حساب Firebase، وحفظ البيانات محلياً.
+ */
 public class SignUpActivity extends AppCompatActivity {
 
+    /** Input fields for user profile and credentials. */
+    /** حقول الإدخال لملف تعريف المستخدم وبيانات الاعتماد. */
     private TextInputEditText fullNameEditText, emailEditText, budgetEditText, passwordEditText, confirmPasswordEditText;
+    
+    /** Layout containers for input fields to show errors and hints. */
+    /** حاويات التخطيط لحقول الإدخال لإظهار الأخطاء والتلميحات. */
     private TextInputLayout fullNameLayout, emailLayout, budgetLayout, passwordLayout, confirmPasswordLayout;
 
+    /** Button to trigger the signup process. */
+    /** زر لتشغيل عملية التسجيل. */
     private Button signUpButton;
+    
+    /** App logo image view. */
+    /** عرض صورة شعار التطبيق. */
     private ImageView logoImage;
+    
+    /** Firebase Auth instance for account creation. */
+    /** نسخة Firebase Auth لإنشاء الحساب. */
     private FirebaseAuth mAuth;
+    
+    /** Progress indicator for background tasks. */
+    /** مؤشر التقدم للمهام الخلفية. */
     private ProgressBar progressBar;
+    
+    /** UI text elements for titles and navigation. */
+    /** عناصر نص واجهة المستخدم للعناوين والتنقل. */
     private TextView titleText, subtitleText, loginText;
+    
+    /** Minimum required length for user passwords. */
+    /** الحد الأدنى للطول المطلوب لكلمات مرور المستخدم. */
     private static final int MIN_PASSWORD_LENGTH = 8;
 
+    /**
+     * Initializes the signup screen and sets up view references.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *
+     * يقوم بتهيئة شاشة التسجيل وإعداد مراجع العرض.
+     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +123,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates all input fields and initiates the Firebase registration process.
+     * Checks for name, email format, budget presence, and password strength.
+     *
+     * يتحقق من جميع حقول الإدخال ويبدأ عملية التسجيل في Firebase.
+     * يتحقق من الاسم، تنسيق البريد الإلكتروني، وجود الميزانية، وقوة كلمة المرور.
+     */
     private void attemptSignUp() {
         if (fullNameLayout != null) fullNameLayout.setError(null);
         if (emailLayout != null) emailLayout.setError(null);
@@ -165,6 +208,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Schedules a monthly recurring notification for the 10th of every month.
+     * Uses AlarmManager to trigger BudgetReminderReceiver.
+     *
+     * يجدول إشعاراً شهرياً متكرراً في العاشر من كل شهر.
+     * يستخدم AlarmManager لتشغيل BudgetReminderReceiver.
+     */
     private void scheduleMonthlyReminder() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, BudgetReminderReceiver.class);

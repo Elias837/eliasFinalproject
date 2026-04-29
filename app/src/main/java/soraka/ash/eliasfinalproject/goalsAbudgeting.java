@@ -25,13 +25,41 @@ import soraka.ash.eliasfinalproject.adapter.BudgetAdapter;
 import soraka.ash.eliasfinalproject.data.FirebaseHelper;
 import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
+/**
+ * Activity for managing financial goals and budgeting.
+ * Displays a list of financial goals retrieved from Firebase and allows adding new goals.
+ *
+ * نشاط لإدارة الأهداف المالية والميزانية.
+ * يعرض قائمة بالأهداف المالية المسترجعة من Firebase ويسمح بإضافة أهداف جديدة.
+ */
 public class goalsAbudgeting extends AppCompatActivity {
+    /** Button to navigate to the Add Goal screen. */
+    /** زر للانتقال إلى شاشة إضافة هدف. */
     private FloatingActionButton addGoalFab;
+
+    /** RecyclerView to display the list of goals. */
+    /** عرض تدويري (RecyclerView) لعرض قائمة الأهداف. */
     private RecyclerView goalsRecyclerView;
+
+    /** Adapter for the goals RecyclerView. */
+    /** محول (Adapter) للعرض التدويري الخاص بالأهداف. */
     private BudgetAdapter budgetAdapter;
+
+    /** List of financial goals to be displayed. */
+    /** قائمة بالأهداف المالية ليتم عرضها. */
     private List<FinancialGoal> budgetItemList;
+
+    /** Custom toolbar for the activity. */
+    /** شريط أدوات مخصص للنشاط. */
     private MaterialToolbar toolbar;
 
+    /**
+     * Initializes the activity, sets up the toolbar, RecyclerView, and FAB.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *
+     * يقوم بتهيئة النشاط، وإعداد شريط الأدوات، والعرض التدويري، والزر العائم.
+     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +94,13 @@ public class goalsAbudgeting extends AppCompatActivity {
         loadGoalsFromFirebase();
     }
 
+    /**
+     * Loads the current user's financial goals from Firebase Realtime Database.
+     * Listens for real-time updates and refreshes the adapter data.
+     *
+     * يحمل الأهداف المالية للمستخدم الحالي من قاعدة بيانات Firebase.
+     * يستمع للتحديثات في الوقت الفعلي ويحدث بيانات المحول.
+     */
     private void loadGoalsFromFirebase() {
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId == null) {
@@ -102,6 +137,11 @@ public class goalsAbudgeting extends AppCompatActivity {
         });
     }
 
+    /**
+     * Refreshes the goal list when the activity is resumed.
+     *
+     * يحدث قائمة الأهداف عند استئناف النشاط.
+     */
     @Override
     protected void onResume() {
         super.onResume();

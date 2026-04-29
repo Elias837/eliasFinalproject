@@ -26,10 +26,30 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main dashboard activity of the application.
+ * Serves as the central navigation hub to different financial tools and settings.
+ *
+ * نشاط اللوحة الرئيسية للتطبيق.
+ * يعمل كمركز تنقل رئيسي لمختلف الأدوات المالية والإعدادات.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /** TextView to display the personalized greeting. */
+    /** نص لعرض الترحيب الشخصي. */
     private TextView welcomeText;
 
+    /** Request code for permissions. */
+    /** رمز طلب الأذونات. */
+    private static final int PERMISSION_REQUEST_CODE = 123;
+
+    /**
+     * Initializes the dashboard, sets up navigation cards and requests permissions.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *
+     * يقوم بتهيئة لوحة التحكم، وإعداد بطاقات التنقل وطلب الأذونات.
+     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches the user's name from SharedPreferences and updates the greeting text.
+     * Defaults to "User" if no name is found.
+     *
+     * يجلب اسم المستخدم من SharedPreferences ويحدث نص الترحيب.
+     * القيمة الافتراضية هي "User" إذا لم يتم العثور على اسم.
+     */
     private void updateGreeting() {
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String name = prefs.getString("user_name", "User");
@@ -89,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks and requests necessary application permissions (Camera, Media, Notifications).
+     *
+     * يتحقق ويطلب أذونات التطبيق الضرورية (الكاميرا، الوسائط، الإشعارات).
+     */
     private void requestAppPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissionsNeeded = new ArrayList<>();
@@ -113,8 +145,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private static final int PERMISSION_REQUEST_CODE = 123;
-
+    /**
+     * Callback for the result from requesting permissions.
+     * @param requestCode The request code passed in requestPermissions.
+     * @param permissions The requested permissions.
+     * @param grantResults The grant results for the corresponding permissions.
+     *
+     * استدعاء لنتيجة طلب الأذونات.
+     * @param requestCode رمز الطلب الذي تم تمريره في requestPermissions.
+     * @param permissions الأذونات المطلوبة.
+     * @param grantResults نتائج المنح للأذونات المقابلة.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

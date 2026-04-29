@@ -23,6 +23,13 @@ import java.util.Locale;
 
 import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
+/**
+ * Activity for editing or deleting an existing financial goal.
+ * Fetches goal details from Firebase and allows updating specific fields.
+ *
+ * نشاط لتعديل أو حذف هدف مالي موجود.
+ * يجلب تفاصيل الهدف من Firebase ويسمح بتحديث حقول معينة.
+ */
 public class EditGoalActivity extends AppCompatActivity {
 
     private TextInputEditText etName, etAmount, etDate, etNotes;
@@ -30,6 +37,13 @@ public class EditGoalActivity extends AppCompatActivity {
     private String goalId;
     private DatabaseReference goalRef;
 
+    /**
+     * Called when the activity is starting. Initializes Firebase references and UI components.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *
+     * يتم استدعاؤه عند بدء النشاط. يقوم بتهيئة مراجع Firebase ومكونات واجهة المستخدم.
+     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +67,11 @@ public class EditGoalActivity extends AppCompatActivity {
         loadGoalData();
     }
 
+    /**
+     * Initializes all UI widgets and sets up their listeners.
+     *
+     * يقوم بتهيئة جميع عناصر واجهة المستخدم وإعداد مستمعي الأحداث الخاصة بها.
+     */
     private void initViews() {
         etName = findViewById(R.id.etEditGoalName);
         etAmount = findViewById(R.id.etEditGoalAmount);
@@ -73,6 +92,11 @@ public class EditGoalActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(v -> deleteGoal());
     }
 
+    /**
+     * Fetches current goal data from Firebase and populates the input fields.
+     *
+     * يجلب بيانات الهدف الحالية من Firebase ويملأ حقول الإدخال.
+     */
     private void loadGoalData() {
         goalRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -93,6 +117,11 @@ public class EditGoalActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Shows a DatePickerDialog for selecting a new target date.
+     *
+     * يظهر نافذة اختيار التاريخ لتحديد تاريخ مستهدف جديد.
+     */
     private void showDatePicker() {
         Calendar cal = Calendar.getInstance();
         new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
@@ -101,6 +130,11 @@ public class EditGoalActivity extends AppCompatActivity {
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    /**
+     * Validates and updates the goal information in Firebase Realtime Database.
+     *
+     * يتحقق من البيانات ويحدث معلومات الهدف في قاعدة بيانات Firebase.
+     */
     private void updateGoal() {
         String name = etName.getText().toString().trim();
         String amountStr = etAmount.getText().toString().trim();
@@ -124,6 +158,11 @@ public class EditGoalActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Removes the current goal from Firebase Realtime Database.
+     *
+     * يحذف الهدف الحالي من قاعدة بيانات Firebase.
+     */
     private void deleteGoal() {
         goalRef.removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

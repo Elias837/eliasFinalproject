@@ -13,11 +13,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Activity for adding a new financial goal.
+ * Allows users to input goal name, target amount, date, and optional notes.
+ *
+ * نشاط لإضافة هدف مالي جديد.
+ * يتيح للمستخدمين إدخال اسم الهدف، المبلغ المستهدف، التاريخ، وملاحظات اختيارية.
+ */
 public class AddGoal2Activity extends AppCompatActivity {
 
     private TextInputEditText goalNameEditText, targetAmountEditText, targetDateEditText, notesEditText;
     private MaterialButton saveButton;
 
+    /**
+     * Initializes the activity, sets up UI components and click listeners.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *
+     * يقوم بتهيئة النشاط وإعداد مكونات واجهة المستخدم ومعالجات الأحداث.
+     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +52,13 @@ public class AddGoal2Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays a DatePickerDialog to allow the user to select a target date.
+     * Sets the selected date text in the targetDateEditText field.
+     *
+     * يعرض نافذة اختيار التاريخ للسماح للمستخدم بتحديد تاريخ الهدف.
+     * يضع التاريخ المختار في حقل targetDateEditText.
+     */
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -51,6 +72,13 @@ public class AddGoal2Activity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    /**
+     * Validates input fields and saves the new goal to Firebase Realtime Database.
+     * Saves under the path: users/[userId]/goals
+     *
+     * يتحقق من صحة الحقول المدخلة ويحفظ الهدف الجديد في قاعدة بيانات Firebase.
+     * يتم الحفظ تحت المسار: users/[userId]/goals
+     */
     private void saveGoal() {
         if (goalNameEditText == null || targetAmountEditText == null) return;
 

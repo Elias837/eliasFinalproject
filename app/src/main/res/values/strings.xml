@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">eliasFinalproject</string>
+    <string name="app_name">Elias Finance</string>
+    <string name="title_budget_summary">Budget Summary</string>
 </resources>

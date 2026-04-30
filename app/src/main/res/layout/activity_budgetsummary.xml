@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Accounts &amp; Payments"
+            app:title="Budget Summary"
             app:titleTextColor="#0F172A"
             app:navigationIcon="?attr/homeAsUpIndicator" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,6 +34,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Budget Target Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/budgetCard"
                 android:layout_width="match_parent"
@@ -77,6 +78,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Current Balance Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/balanceCard"
                 android:layout_width="match_parent"
@@ -84,6 +86,7 @@
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="#0F172A"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp">
@@ -115,17 +118,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Tap to Add Funds"
+                        android:text="Tap to Update Balance"
                         android:textColor="#94A3B8"
                         android:textSize="12sp"
                         android:alpha="0.8" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Income and Expense Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/incomeCard"
@@ -133,6 +138,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="16dp">
 
                     <LinearLayout
@@ -155,6 +163,13 @@
                             android:text="+$0.00"
                             android:textColor="#10B981"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to add"
+                            android:textSize="10sp"
+                            android:alpha="0.6" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -164,6 +179,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="16dp">
 
                     <LinearLayout
@@ -186,9 +204,27 @@
                             android:text="-$0.00"
                             android:textColor="#EF4444"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to add"
+                            android:textSize="10sp"
+                            android:alpha="0.6" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResetAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reset Everything to Zero"
+                android:textColor="@color/white"
+                app:backgroundTint="#EF4444"
+                app:cornerRadius="12dp"
+                android:padding="12dp"
+                app:icon="@android:drawable/ic_menu_delete" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

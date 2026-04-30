@@ -106,7 +106,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Accounts &amp; Payments"
+                            android:text="budget summary"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -218,7 +218,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AI Insights"
+                            android:text="buy or pass?"
                             android:textColor="#0F172A"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -271,7 +271,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Financial Statistics"
+                            android:text="financial statistics"
                             android:textColor="#0F172A"
                             android:textSize="18sp"
                             android:textStyle="bold" />

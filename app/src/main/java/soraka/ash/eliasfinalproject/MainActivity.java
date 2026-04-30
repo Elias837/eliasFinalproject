@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (btnAI != null) {
-            btnAI.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AiInsights.class)));
+            btnAI.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, GeminiActivity.class)));
         }
 
         if (btnStatistics != null) {

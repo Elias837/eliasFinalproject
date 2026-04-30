@@ -55,7 +55,8 @@ public class GeminiActivity extends AppCompatActivity {
         // Initialize the Gemini Developer API backend service
         // Create a `GenerativeModel` instance with a model that supports your use case
         GenerativeModel geminiModel = FirebaseAI.getInstance(GenerativeBackend.googleAI())
-                .generativeModel("gemini-1.5-flash");
+                .generativeModel("gemini-2.5-flash-lite");
+
 
         // Use the GenerativeModelFutures Java compatibility layer which offers
         // support for ListenableFuture and Publisher APIs
@@ -90,8 +91,8 @@ public class GeminiActivity extends AppCompatActivity {
             if (btnSuggestSteps != null) btnSuggestSteps.setEnabled(false);
 
 
-            String promptStr = "I want to perform the following task: '" + topic + "'. " +
-                    "Can you suggest a clear, step-by-step checklist to complete this task effectively?";
+            String promptStr = "i am using a money management app. i just spent money on: '" + topic + "'. " +
+                    "as a financial advisor, can you give me 3 quick professional tips to manage my budget better for this specific item and tell me if this is usually considered a 'need' or a 'want' or a 'saving' or a 'spending';";
 
 
             Content promptContent = new Content.Builder()

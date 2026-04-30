@@ -25,7 +25,7 @@ import com.google.firebase.ai.type.GenerativeBackend;
 import java.util.concurrent.Executor;
 
 public class GeminiActivity extends AppCompatActivity {
-
+//Fields
     private GenerativeModelFutures model;
     private View pbLoading;
     private TextView tvAiResponse;

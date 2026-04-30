@@ -22,6 +22,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.ai.FirebaseAI;
+import com.google.firebase.ai.java.GenerativeModelFutures;
+import com.google.firebase.ai.type.GenerativeBackend;
 
 import java.util.ArrayList;
 import java.util.List;

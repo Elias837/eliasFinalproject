@@ -39,7 +39,7 @@ public class budgetSummary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_accounts_and_pay);
+        setContentView(R.layout.activity_budgetsummary);
         
         initializeViews();
         loadBudgetData();

@@ -55,27 +55,6 @@
                 tools:itemCount="2"
                 tools:listitem="@layout/item_goal" />
 
-            <TextView
-                android:id="@+id/budgetsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="12dp"
-                android:text="My Budgets"
-                android:textColor="#64748B"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.05" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/budgetsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:clipToPadding="false"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_budget" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

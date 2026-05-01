@@ -22,41 +22,38 @@ import com.google.firebase.auth.FirebaseUser;
 /**
  * Activity that handles user authentication.
  * Provides a modern login interface with email/password validation and Firebase integration.
- *
+ * <p>
  * نشاط يتعامل مع مصادقة المستخدم.
  * يوفر واجهة تسجيل دخول حديثة مع التحقق من البريد الإلكتروني وكلمة المرور والتكامل مع Firebase.
  */
 public class Login extends AppCompatActivity {
-    /** Primary buttons for login and social actions. */
-    /** الأزرار الرئيسية لتسجيل الدخول والإجراءات الاجتماعية. */
+    
+    /** Buttons for login, signup, and social providers. أزرار تسجيل الدخول والتسجيل والمنصات الاجتماعية. */
     private Button bt_login;
     private Button btnSignup;
     private Button btnGoogle;
     private Button btnFacebook;
 
-    /** Firebase Auth instance for managing user sign-in. */
-    /** نسخة Firebase Auth لإدارة تسجيل دخول المستخدم. */
+    /** Firebase Auth instance for managing user sign-in. نسخة Firebase Auth لإدارة تسجيل دخول المستخدم. */
     private FirebaseAuth mAuth;
     
-    /** Layouts and edit fields for user input. */
-    /** التخطيطات وحقول التحرير لمدخلات المستخدم. */
+    /** Input layouts for credentials. تخطيطات الإدخال لبيانات الاعتماد. */
     private TextInputLayout emailLayout, passwordLayout;
+    /** Edit fields for credentials. حقول التحرير لبيانات الاعتماد. */
     private TextInputEditText emailEditText, passwordEditText;
 
-    /** View to indicate background authentication progress. */
-    /** عرض للإشارة إلى تقدم عملية المصادقة في الخلفية. */
+    /** Progress indicator. مؤشر التقدم. */
     private ProgressBar progressBar;
 
-    /** Informational text views for headers and section labels. */
-    /** نصوص معلوماتية للعناوين وتسميات الأقسام. */
+    /** UI text elements. عناصر نص واجهة المستخدم. */
     private TextView tv_welcome, tv_subtitle, tv_or;
 
     /**
      * Initializes the login screen, checks for existing sessions, and sets up window insets.
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
-     *
+     * <p>
      * يقوم بتهيئة شاشة تسجيل الدخول، والتحقق من الجلسات الموجودة، وإعداد حواف النافذة.
-     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     *
+     * @param savedInstanceState Saved state. الحالة المحفوظة.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +85,7 @@ public class Login extends AppCompatActivity {
 
     /**
      * Links Java objects to their respective view components in the XML layout.
-     *
+     * <p>
      * يربط كائنات Java بمكونات العرض المقابلة لها في تخطيط XML.
      */
     private void initializeViews() {
@@ -109,7 +106,7 @@ public class Login extends AppCompatActivity {
 
     /**
      * Assigns click behavior to buttons, including navigation and authentication triggers.
-     *
+     * <p>
      * يعين سلوك النقر للأزرار، بما في ذلك التنقل ومحفزات المصادقة.
      */
     private void setupClickListeners() {
@@ -136,7 +133,7 @@ public class Login extends AppCompatActivity {
     /**
      * Performs credential validation and initiates sign-in with Firebase.
      * Redirects to the Main Dashboard upon successful authentication.
-     *
+     * <p>
      * يقوم بالتحقق من صحة أوراق الاعتماد ويبدأ تسجيل الدخول مع Firebase.
      * يعيد التوجيه إلى اللوحة الرئيسية عند نجاح المصادقة.
      */

@@ -16,21 +16,30 @@ import java.util.Locale;
 /**
  * Activity for adding a new financial goal.
  * Allows users to input goal name, target amount, date, and optional notes.
- *
+ * <p>
  * نشاط لإضافة هدف مالي جديد.
  * يتيح للمستخدمين إدخال اسم الهدف، المبلغ المستهدف، التاريخ، وملاحظات اختيارية.
  */
 public class AddGoal2Activity extends AppCompatActivity {
 
-    private TextInputEditText goalNameEditText, targetAmountEditText, targetDateEditText, notesEditText;
+    /** Input field for the name of the financial goal. حقل إدخال لاسم الهدف المالي. */
+    private TextInputEditText goalNameEditText;
+    /** Input field for the target savings amount. حقل إدخال للمبلغ المالي المستهدف. */
+    private TextInputEditText targetAmountEditText;
+    /** Input field for the deadline date of the goal. حقل إدخال لتاريخ الموعد النهائي للهدف. */
+    private TextInputEditText targetDateEditText;
+    /** Input field for additional notes about the goal. حقل إدخال لملاحظات إضافية حول الهدف. */
+    private TextInputEditText notesEditText;
+    /** Button to trigger the saving process. زر لبدء عملية الحفظ. */
     private MaterialButton saveButton;
 
     /**
      * Initializes the activity, sets up UI components and click listeners.
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
-     *
+     * <p>
      * يقوم بتهيئة النشاط وإعداد مكونات واجهة المستخدم ومعالجات الأحداث.
-     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *                           إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +63,10 @@ public class AddGoal2Activity extends AppCompatActivity {
 
     /**
      * Displays a DatePickerDialog to allow the user to select a target date.
-     * Sets the selected date text in the targetDateEditText field.
-     *
+     * Sets the selected date text in the targetDateEditText field in DD/MM/YYYY format.
+     * <p>
      * يعرض نافذة اختيار التاريخ للسماح للمستخدم بتحديد تاريخ الهدف.
-     * يضع التاريخ المختار في حقل targetDateEditText.
+     * يضع التاريخ المختار في حقل targetDateEditText بتنسيق يوم/شهر/سنة.
      */
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -74,10 +83,10 @@ public class AddGoal2Activity extends AppCompatActivity {
 
     /**
      * Validates input fields and saves the new goal to Firebase Realtime Database.
-     * Saves under the path: users/[userId]/goals
-     *
-     * يتحقق من صحة الحقول المدخلة ويحفظ الهدف الجديد في قاعدة بيانات Firebase.
-     * يتم الحفظ تحت المسار: users/[userId]/goals
+     * The goal is stored under "users/[userId]/goals".
+     * <p>
+     * يتحقق من صحة الحقول المدخلة ويحفظ الهدف الجديد في قاعدة بيانات Firebase Realtime.
+     * يتم تخزين الهدف تحت المسار "users/[userId]/goals".
      */
     private void saveGoal() {
         if (goalNameEditText == null || targetAmountEditText == null) return;
@@ -87,6 +96,7 @@ public class AddGoal2Activity extends AppCompatActivity {
         String date = targetDateEditText != null && targetDateEditText.getText() != null ? targetDateEditText.getText().toString().trim() : "";
         String notes = notesEditText != null && notesEditText.getText() != null ? notesEditText.getText().toString().trim() : "";
 
+        // Simple validation check
         if (title.isEmpty() || amountStr.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -106,7 +116,7 @@ public class AddGoal2Activity extends AppCompatActivity {
             return;
         }
 
-        // Saving directly to the user-specific path without using FirebaseHelper
+        // Accessing the database reference for the user's goals
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                 .child(userId)
                 .child("goals");

@@ -4,210 +4,210 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import org.w3c.dom.Text;
-
+/**
+ * Entity class representing an income transaction in the local Room database.
+ * <p>
+ * فئة تمثل عملية دخل مالي في قاعدة بيانات Room المحلية.
+ */
 @Entity
-public class MyIncome
-{
-    /**
-     * فئة تمثل عملية مالية داخل التطبيق
+public class MyIncome {
+
+    /** 
+     * Unique identifier for the transaction. 
+     * معرف فريد للعملية المالية. 
      */
-        @PrimaryKey(autoGenerate = true)
-        /** رقم العملية */
-        @ColumnInfo
-        public long transactionId;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo
+    public long transactionId;
 
-        /** المبلغ المالي للعملية */
+    /** 
+     * Monetary amount of the transaction. 
+     * المبلغ المالي للعملية. 
+     */
+    public double amount;
 
-        public double amount;
+    /** 
+     * Type of transaction (e.g., Income, Expense). 
+     * نوع العملية (مثل: دخل أو مصروف). 
+     */
+    public String type;
 
-        /** نوع العملية: دخل أو مصروف */
+    /** 
+     * A short title for the transaction. 
+     * عنوان قصير للعملية. 
+     */
+    public String shortTitle;
 
-        public String type;
+    /** 
+     * Detailed description of the transaction. 
+     * وصف تفصيلي للعملية المالية. 
+     */
+    public String description;
 
-        /** عنوان قصير للعملية (مثلاً: راتب، مطعم، فواتير...) */
-        public String shortTitle;
+    /** 
+     * Date of the transaction in milliseconds. 
+     * تاريخ تنفيذ العملية بالملي ثانية. 
+     */
+    public long date;
 
-        /** وصف تفصيلي للعملية المالية */
-        public String description;
+    /** 
+     * Method used for payment (Cash, Card, etc.). 
+     * طريقة الدفع (نقداً، بطاقة، إلخ). 
+     */
+    public String paymentMethod;
 
-        /** تاريخ تنفيذ العملية (بالميلي ثانية) */
-        public long date;
+    /** 
+     * Person or entity related to the transaction. 
+     * الجهة أو الشخص المرتبط بالعملية. 
+     */
+    public String counterpart;
 
-        /** طريقة الدفع (نقداً، بطاقة، تحويل بنكي، إلخ) */
+    /** 
+     * Flag indicating if the transaction is completed. 
+     * حالة إكمال العملية. 
+     */
+    public boolean isCompleted;
 
-        public String paymentMethod;
+    /** 
+     * Category ID for classification (Food, Rent, etc.). 
+     * رقم التصنيف المالي. 
+     */
+    public long categoryId;
 
-        /** اسم الجهة أو الشخص المرتبط بالعملية */
+    /** 
+     * Remaining balance after this transaction. 
+     * الرصيد المتبقي بعد العملية. 
+     */
+    public double remainingBalance;
 
-        public String counterpart;
+    /** 
+     * Location where the transaction took place. 
+     * الموقع الذي تمت فيه العملية. 
+     */
+    public String location;
 
-        /** هل تم تنفيذ العملية فعلياً أم لا */
+    /** 
+     * Flag indicating if the transaction repeats monthly. 
+     * هل العملية متكررة شهرياً. 
+     */
+    public boolean isRecurring;
 
-        public boolean isCompleted;
+    /** 
+     * ID of the user who owns this record. 
+     * رقم المستخدم صاحب العملية. 
+     */
+    public long userId;
 
-        /** رقم التصنيف المالي (مثلاً: طعام، سكن، ترفيه...) */
+    // ------------------ Getters ------------------
 
-        public long categoryId;
+    /** @return Transaction ID. معرف العملية. */
+    public long getTransactionId() { return transactionId; }
 
-        /** المبلغ المتبقي بعد العملية */
+    /** @return Transaction amount. مبلغ العملية. */
+    public double getAmount() { return amount; }
 
-        public double remainingBalance;
+    /** @return Transaction type. نوع العملية. */
+    public String getType() { return type; }
 
-        /** الموقع الجغرافي أو المتجر الذي تمت فيه العملية */
+    /** @return Short title. عنوان قصير. */
+    public String getShortTitle() { return shortTitle; }
 
-        public String location;
+    /** @return Detailed description. وصف تفصيلي. */
+    public String getDescription() { return description; }
 
-        /** هل العملية متكررة شهرياً مثلاً */
+    /** @return Transaction date. تاريخ العملية. */
+    public long getDate() { return date; }
 
-        public boolean isRecurring;
+    /** @return Payment method. طريقة الدفع. */
+    public String getPaymentMethod() { return paymentMethod; }
 
-        /** رقم المستخدم الذي قام بالعملية */
+    /** @return Transaction counterpart. الجهة المقابلة. */
+    public String getCounterpart() { return counterpart; }
 
-        public long userId;
+    /** @return Completion status. حالة الإكمال. */
+    public boolean isCompleted() { return isCompleted; }
 
-        // ------------------ Getters ------------------
+    /** @return Category identifier. رقم التصنيف. */
+    public long getCategoryId() { return categoryId; }
 
-        public long getTransactionId() {
-            return transactionId;
-        }
+    /** @return Remaining balance. الرصيد المتبقي. */
+    public double getRemainingBalance() { return remainingBalance; }
 
-        public double getAmount() {
-            return amount;
-        }
+    /** @return Location string. الموقع. */
+    public String getLocation() { return location; }
 
-        public String getType() {
-            return type;
-        }
+    /** @return True if recurring. إذا كانت متكررة. */
+    public boolean isRecurring() { return isRecurring; }
 
-        public String getShortTitle() {
-            return shortTitle;
-        }
+    /** @return User ID. رقم المستخدم. */
+    public long getUserId() { return userId; }
 
-        public String getDescription() {
-            return description;
-        }
+    // ------------------ Setters ------------------
 
-        public long getDate() {
-            return date;
-        }
+    /** @param transactionId Sets transaction ID. تعيين معرف العملية. */
+    public void setTransactionId(long transactionId) { this.transactionId = transactionId; }
 
-        public String getPaymentMethod() {
-            return paymentMethod;
-        }
+    /** @param amount Sets transaction amount. تعيين مبلغ العملية. */
+    public void setAmount(double amount) { this.amount = amount; }
 
-        public String getCounterpart() {
-            return counterpart;
-        }
+    /** @param type Sets transaction type. تعيين نوع العملية. */
+    public void setType(String type) { this.type = type; }
 
-        public boolean isCompleted() {
-            return isCompleted;
-        }
+    /** @param shortTitle Sets short title. تعيين عنوان قصير. */
+    public void setShortTitle(String shortTitle) { this.shortTitle = shortTitle; }
 
-        public long getCategoryId() {
-            return categoryId;
-        }
+    /** @param description Sets detailed description. تعيين وصف تفصيلي. */
+    public void setDescription(String description) { this.description = description; }
 
-        public double getRemainingBalance() {
-            return remainingBalance;
-        }
+    /** @param date Sets transaction date. تعيين تاريخ العملية. */
+    public void setDate(long date) { this.date = date; }
 
-        public String getLocation() {
-            return location;
-        }
+    /** @param paymentMethod Sets payment method. تعيين طريقة الدفع. */
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 
-        public boolean isRecurring() {
-            return isRecurring;
-        }
+    /** @param counterpart Sets counterpart entity. تعيين الجهة المقابلة. */
+    public void setCounterpart(String counterpart) { this.counterpart = counterpart; }
 
-        public long getUserId() {
-            return userId;
-        }
+    /** @param completed Sets completion flag. تعيين حالة الإكمال. */
+    public void setCompleted(boolean completed) { isCompleted = completed; }
 
+    /** @param categoryId Sets category ID. تعيين رقم التصنيف. */
+    public void setCategoryId(long categoryId) { this.categoryId = categoryId; }
 
-        // ------------------ Setters ------------------
+    /** @param remainingBalance Sets remaining balance. تعيين الرصيد المتبقي. */
+    public void setRemainingBalance(double remainingBalance) { this.remainingBalance = remainingBalance; }
 
-        public void setTransactionId(long transactionId) {
-            this.transactionId = transactionId;
-        }
+    /** @param location Sets location. تعيين الموقع. */
+    public void setLocation(String location) { this.location = location; }
 
-        public void setAmount(double amount) {
-            this.amount = amount;
-        }
+    /** @param recurring Sets recurring status. تعيين حالة التكرار. */
+    public void setRecurring(boolean recurring) { isRecurring = recurring; }
 
-        public void setType(String type) {
-            this.type = type;
-        }
+    /** @param userId Sets user ID. تعيين رقم المستخدم. */
+    public void setUserId(long userId) { this.userId = userId; }
 
-        public void setShortTitle(String shortTitle) {
-            this.shortTitle = shortTitle;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public void setDate(long date) {
-            this.date = date;
-        }
-
-        public void setPaymentMethod(String paymentMethod) {
-            this.paymentMethod = paymentMethod;
-        }
-
-        public void setCounterpart(String counterpart) {
-            this.counterpart = counterpart;
-        }
-
-        public void setCompleted(boolean completed) {
-            isCompleted = completed;
-        }
-
-        public void setCategoryId(long categoryId) {
-            this.categoryId = categoryId;
-        }
-
-        public void setRemainingBalance(double remainingBalance) {
-            this.remainingBalance = remainingBalance;
-        }
-
-        public void setLocation(String location) {
-            this.location = location;
-        }
-
-        public void setRecurring(boolean recurring) {
-            isRecurring = recurring;
-        }
-
-        public void setUserId(long userId) {
-            this.userId = userId;
-        }
-
-        // ------------------ toString ------------------
-
-        @Override
-        public String toString() {
-            return "MyTransaction{" +
-                    "transactionId=" + transactionId +
-                    ", amount=" + amount +
-                    ", type='" + type + '\'' +
-                    ", shortTitle='" + shortTitle + '\'' +
-                    ", description='" + description + '\'' +
-                    ", date=" + date +
-                    ", paymentMethod='" + paymentMethod + '\'' +
-                    ", counterpart='" + counterpart + '\'' +
-                    ", isCompleted=" + isCompleted +
-                    ", categoryId=" + categoryId +
-                    ", remainingBalance=" + remainingBalance +
-                    ", location='" + location + '\'' +
-                    ", isRecurring=" + isRecurring +
-                    ", userId=" + userId +
-                    '}';
-        }
+    /**
+     * Returns a string representation of the income object.
+     * <p>
+     * يرجع تمثيلاً نصياً لكائن الدخل.
+     */
+    @Override
+    public String toString() {
+        return "MyIncome{" +
+                "transactionId=" + transactionId +
+                ", amount=" + amount +
+                ", type='" + type + '\'' +
+                ", shortTitle='" + shortTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", counterpart='" + counterpart + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", categoryId=" + categoryId +
+                ", remainingBalance=" + remainingBalance +
+                ", location='" + location + '\'' +
+                ", isRecurring=" + isRecurring +
+                ", userId=" + userId +
+                '}';
+    }
 }
-
-
-
-
-
-

@@ -32,8 +32,11 @@ import java.util.Map;
 import soraka.ash.eliasfinalproject.models.Transaction;
 
 /**
- * Activity that provides a detailed summary of the user's budget, income, expenses, and balance.
- * Allows users to update their balance, add transactions, and reset all financial data.
+ * Activity that displays the financial summary of the user.
+ * Shows balance, total income, total expenses, and remaining budget.
+ * <p>
+ * نشاط يعرض الملخص المالي للمستخدم.
+ * يظهر الرصيد، إجمالي الدخل، إجمالي المصروفات، والميزانية المتبقية.
  */
 public class budgetSummary extends AppCompatActivity {
     private MaterialCardView budgetCard, incomeCard, expenseCard, balanceCard;
@@ -44,6 +47,11 @@ public class budgetSummary extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String userId;
 
+    /**
+     * Called when the activity is starting. Initializes Firebase and UI.
+     * <p>
+     * تُستدعى عند بدء النشاط. تهيئ Firebase وواجهة المستخدم.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +74,11 @@ public class budgetSummary extends AppCompatActivity {
         });
     }
 
+    /**
+     * Finds and initializes view references from the layout.
+     * <p>
+     * يبحث عن مراجع الواجهات ويهيئها من التخطيط.
+     */
     private void initializeViews() {
         budgetCard = findViewById(R.id.budgetCard);
         incomeCard = findViewById(R.id.incomeCard);
@@ -80,12 +93,22 @@ public class budgetSummary extends AppCompatActivity {
         btnResetAll = findViewById(R.id.btnResetAll);
     }
 
+    /**
+     * Loads the saved budget target from local storage.
+     * <p>
+     * يحمل هدف الميزانية المحفوظ من التخزين المحلي.
+     */
     private void loadBudgetData() {
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String budget = prefs.getString("monthly_budget", "0.00");
         if (tvBudgetAmount != null) tvBudgetAmount.setText("$" + budget);
     }
 
+    /**
+     * Configures event listeners for the interactive UI cards and buttons.
+     * <p>
+     * يضبط مستمعي الأحداث للبطاقات والأزرار التفاعلية.
+     */
     private void setupClickListeners() {
         if (balanceCard != null) {
             balanceCard.setOnClickListener(v -> showUpdateBalanceDialog());
@@ -108,6 +131,11 @@ public class budgetSummary extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows a confirmation dialog before wiping all user financial data.
+     * <p>
+     * يظهر نافذة تأكيد قبل مسح جميع البيانات المالية للمستخدم.
+     */
     private void showResetAllDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Reset Everything?")
@@ -118,26 +146,31 @@ public class budgetSummary extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Resets balance, transactions in Firebase, and local budget target to zero.
+     * <p>
+     * يصفر الرصيد والمعاملات في Firebase وهدف الميزانية محلياً.
+     */
     private void resetEverything() {
         if (userId == null) return;
 
-        // 1. Reset Firebase Balance
         mDatabase.child("users").child(userId).child("current_balance").setValue(0);
-
-        // 2. Remove Firebase Transactions
         mDatabase.child("users").child(userId).child("transactions").removeValue();
 
-        // 3. Reset Local SharedPreferences Budget Target
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("monthly_budget", "0.00");
         editor.apply();
 
-        // 4. Update UI
         loadBudgetData();
         Toast.makeText(this, "All data has been reset to zero", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Displays a dialog to modify the monthly budget goal.
+     * <p>
+     * يعرض نافذة لتعديل هدف الميزانية الشهري.
+     */
     private void showUpdateBudgetTargetDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update Monthly Budget Target");
@@ -161,6 +194,11 @@ public class budgetSummary extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Displays a dialog to manually set the current account balance.
+     * <p>
+     * يعرض نافذة لتعيين رصيد الحساب الحالي يدوياً.
+     */
     private void showUpdateBalanceDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update Current Balance");
@@ -180,6 +218,13 @@ public class budgetSummary extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Shows a list of categories based on transaction type (Income/Expense).
+     * <p>
+     * يعرض قائمة بالفئات بناءً على نوع المعاملة (دخل/مصروف).
+     *
+     * @param type The type of transaction. نوع المعاملة.
+     */
     private void showAddTransactionDialog(String type) {
         String[] categories = type.equals(Transaction.TYPE_EXPENSE) 
                 ? new String[]{"Food", "Rent", "Transport", "Shopping", "Entertainment", "Other"}
@@ -194,6 +239,14 @@ public class budgetSummary extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Displays a dialog to input the amount for a new transaction.
+     * <p>
+     * يعرض نافذة لإدخال مبلغ معاملة جديدة.
+     *
+     * @param type The transaction type. نوع المعاملة.
+     * @param category The selected category. الفئة المختارة.
+     */
     private void showAmountInputDialog(String type, String category) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter " + type + " Amount");
@@ -212,12 +265,28 @@ public class budgetSummary extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Updates the user's current balance in Firebase.
+     * <p>
+     * يحدث الرصيد الحالي للمستخدم في Firebase.
+     *
+     * @param newBalance The updated balance value. قيمة الرصيد المحدثة.
+     */
     private void updateBalanceInFirebase(double newBalance) {
         if (userId == null) return;
         mDatabase.child("users").child(userId).child("current_balance").setValue(newBalance)
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Balance updated", Toast.LENGTH_SHORT).show());
     }
 
+    /**
+     * Saves a new transaction record to Firebase and triggers balance adjustment.
+     * <p>
+     * يحفظ سجل معاملة جديد في Firebase ويقوم بتعديل الرصيد.
+     *
+     * @param type Income or Expense. دخل أم مصروف.
+     * @param category Category of spending/earning. فئة الإنفاق أو الكسب.
+     * @param amount The monetary value. القيمة المالية.
+     */
     private void saveTransaction(String type, String category, double amount) {
         if (userId == null) return;
         String transactionId = mDatabase.child("users").child(userId).child("transactions").push().getKey();
@@ -235,6 +304,14 @@ public class budgetSummary extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Adjusts the total balance in Firebase based on a new transaction.
+     * <p>
+     * يعدل إجمالي الرصيد في Firebase بناءً على معاملة جديدة.
+     *
+     * @param type Income or Expense. نوع المعاملة.
+     * @param amount The amount to add or subtract. المبلغ المراد إضافته أو طرحه.
+     */
     private void adjustBalance(String type, double amount) {
         mDatabase.child("users").child(userId).child("current_balance").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -248,10 +325,14 @@ public class budgetSummary extends AppCompatActivity {
         });
     }
 
+    /**
+     * Attaches Firebase listeners to update UI automatically when data changes.
+     * <p>
+     * يربط مستمعي Firebase لتحديث الواجهة تلقائياً عند تغير البيانات.
+     */
     private void listenForFinancialUpdates() {
         if (userId == null) return;
 
-        // Listen for balance
         mDatabase.child("users").child(userId).child("current_balance").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -263,7 +344,6 @@ public class budgetSummary extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        // Listen for all transactions to calculate totals
         mDatabase.child("users").child(userId).child("transactions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -280,7 +360,6 @@ public class budgetSummary extends AppCompatActivity {
                 tvIncomeAmount.setText("+$" + String.format("%.2f", totalIncome));
                 tvExpenseAmount.setText("-$" + String.format("%.2f", totalExpense));
                 
-                // Update remaining budget
                 SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
                 double budget = Double.parseDouble(prefs.getString("monthly_budget", "0"));
                 tvRemainingBudget.setText("Remaining: $" + String.format("%.2f", budget - totalExpense));

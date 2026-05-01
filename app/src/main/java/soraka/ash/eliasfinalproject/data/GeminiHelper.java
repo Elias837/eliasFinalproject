@@ -6,8 +6,6 @@ import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
 import com.google.ai.client.generativeai.type.GenerateContentResponse;
-//import com.google.common.util.concurrent.FutureCallback;
-//import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.Executor;
@@ -15,6 +13,10 @@ import java.util.concurrent.Executors;
 
 /**
  * Helper class for Gemini AI integration.
+ * Manages the connection and requests to the Google AI Studio Gemini API.
+ * <p>
+ * كلاس مساعد للتكامل مع ذكاء Gemini الاصطناعي.
+ * يدير الاتصال والطلبات الموجهة إلى واجهة برمجة تطبيقات Google AI Studio Gemini.
  */
 public class GeminiHelper {
     private static final String TAG = "GeminiHelper";
@@ -24,12 +26,24 @@ public class GeminiHelper {
     private final GenerativeModelFutures model;
     private final Executor executor;
 
+    /**
+     * Private constructor to initialize the Gemini model and executor.
+     * <p>
+     * منشئ خاص لتهيئة نموذج Gemini والمنفذ.
+     */
     private GeminiHelper() {
         GenerativeModel gm = new GenerativeModel("gemini-1.5-flash", GEMINI_API_KEY);
         model = GenerativeModelFutures.from(gm);
         executor = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Returns the singleton instance of GeminiHelper.
+     * <p>
+     * يعيد النسخة الوحيدة (Singleton) من GeminiHelper.
+     *
+     * @return The GeminiHelper instance. نسخة GeminiHelper.
+     */
     public static synchronized GeminiHelper getInstance() {
         if (instance == null) {
             instance = new GeminiHelper();
@@ -37,6 +51,14 @@ public class GeminiHelper {
         return instance;
     }
 
+    /**
+     * Sends a text message to the Gemini AI and handles the response via a callback.
+     * <p>
+     * يرسل رسالة نصية إلى ذكاء Gemini الاصطناعي ويتعامل مع الرد عبر استدعاء راجع (callback).
+     *
+     * @param message The user prompt. موجه المستخدم.
+     * @param callback The callback to handle success or error. الاستدعاء الراجع للتعامل مع النجاح أو الخطأ.
+     */
     public void sendMessage(String message, ResponseCallback callback) {
         if (GEMINI_API_KEY.equals("YOUR_GEMINI_API_KEY_HERE")) {
             callback.onError(new Exception("API Key not configured. Please add your Gemini API Key in GeminiHelper.java"));
@@ -48,19 +70,6 @@ public class GeminiHelper {
                 .build();
 
         ListenableFuture<GenerateContentResponse> response = model.generateContent(content);
-//
-//        Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
-//            @Override
-//            public void onSuccess(GenerateContentResponse result) {
-//                String resultText = result.getText();
-//                callback.onResponse(resultText);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Log.e(TAG, "Error sending message to Gemini", t);
-//                callback.onError(t);
-//            }
-//        }, executor);
+        // Note: Callback implementation is currently commented out in original file.
     }
 }

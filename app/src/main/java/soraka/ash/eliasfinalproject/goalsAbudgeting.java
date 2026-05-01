@@ -28,37 +28,48 @@ import soraka.ash.eliasfinalproject.models.FinancialGoal;
 /**
  * Activity for managing financial goals and budgeting.
  * Displays a list of financial goals retrieved from Firebase and allows adding new goals.
- *
+ * <p>
  * نشاط لإدارة الأهداف المالية والميزانية.
  * يعرض قائمة بالأهداف المالية المسترجعة من Firebase ويسمح بإضافة أهداف جديدة.
  */
 public class goalsAbudgeting extends AppCompatActivity {
-    /** Button to navigate to the Add Goal screen. */
-    /** زر للانتقال إلى شاشة إضافة هدف. */
+    /** 
+     * Floating Action Button to navigate to the Add Goal screen.
+     * زر عائم للانتقال إلى شاشة إضافة هدف.
+     */
     private FloatingActionButton addGoalFab;
 
-    /** RecyclerView to display the list of goals. */
-    /** عرض تدويري (RecyclerView) لعرض قائمة الأهداف. */
+    /** 
+     * RecyclerView to display the list of financial goals.
+     * عرض تدويري (RecyclerView) لعرض قائمة الأهداف المالية.
+     */
     private RecyclerView goalsRecyclerView;
 
-    /** Adapter for the goals RecyclerView. */
-    /** محول (Adapter) للعرض التدويري الخاص بالأهداف. */
+    /** 
+     * Adapter for the goals RecyclerView to bind goal data to views.
+     * محول (Adapter) للعرض التدويري لربط بيانات الأهداف بالواجهات.
+     */
     private BudgetAdapter budgetAdapter;
 
-    /** List of financial goals to be displayed. */
-    /** قائمة بالأهداف المالية ليتم عرضها. */
+    /** 
+     * List containing the financial goals to be displayed in the UI.
+     * قائمة تحتوي على الأهداف المالية التي سيتم عرضها في واجهة المستخدم.
+     */
     private List<FinancialGoal> budgetItemList;
 
-    /** Custom toolbar for the activity. */
-    /** شريط أدوات مخصص للنشاط. */
+    /** 
+     * Material design toolbar for the activity's header.
+     * شريط أدوات (Toolbar) بتصميم Material لرأس النشاط.
+     */
     private MaterialToolbar toolbar;
 
     /**
-     * Initializes the activity, sets up the toolbar, RecyclerView, and FAB.
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
-     *
+     * Initializes the activity, sets up the toolbar, RecyclerView, and Floating Action Button.
+     * <p>
      * يقوم بتهيئة النشاط، وإعداد شريط الأدوات، والعرض التدويري، والزر العائم.
-     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *                           إذا تمت إعادة تهيئة النشاط بعد إغلاقه سابقاً.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +91,7 @@ public class goalsAbudgeting extends AppCompatActivity {
         if (goalsRecyclerView != null) {
             goalsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             goalsRecyclerView.setAdapter(budgetAdapter);
-            // This is important for ScrollView interaction
+            // Disable nested scrolling for smoother interaction inside a ScrollView
             goalsRecyclerView.setNestedScrollingEnabled(false);
         }
 
@@ -96,10 +107,10 @@ public class goalsAbudgeting extends AppCompatActivity {
 
     /**
      * Loads the current user's financial goals from Firebase Realtime Database.
-     * Listens for real-time updates and refreshes the adapter data.
-     *
-     * يحمل الأهداف المالية للمستخدم الحالي من قاعدة بيانات Firebase.
-     * يستمع للتحديثات في الوقت الفعلي ويحدث بيانات المحول.
+     * Listens for real-time updates and refreshes the adapter data whenever data changes.
+     * <p>
+     * يحمل الأهداف المالية للمستخدم الحالي من قاعدة بيانات Firebase Realtime.
+     * يستمع للتحديثات في الوقت الفعلي ويحدث بيانات المحول كلما تغيرت البيانات.
      */
     private void loadGoalsFromFirebase() {
         String userId = FirebaseAuth.getInstance().getUid();
@@ -138,9 +149,9 @@ public class goalsAbudgeting extends AppCompatActivity {
     }
 
     /**
-     * Refreshes the goal list when the activity is resumed.
-     *
-     * يحدث قائمة الأهداف عند استئناف النشاط.
+     * Refreshes the goal list from Firebase when the activity is resumed to ensure data consistency.
+     * <p>
+     * يحدث قائمة الأهداف من Firebase عند استئناف النشاط لضمان اتساق البيانات.
      */
     @Override
     protected void onResume() {

@@ -24,23 +24,27 @@ import com.google.firebase.ai.type.GenerativeBackend;
 
 import java.util.concurrent.Executor;
 
+/**
+ * Activity that integrates with Firebase AI (Gemini) to provide financial advice.
+ * Users can enter a spending topic and receive AI-generated suggestions.
+ * <p>
+ * نشاط يتكامل مع ذكاء Firebase الاصطناعي (Gemini) لتقديم نصائح مالية.
+ * يمكن للمستخدمين إدخال موضوع إنفاق والحصول على اقتراحات مولدة بواسطة الذكاء الاصطناعي.
+ */
 public class GeminiActivity extends AppCompatActivity {
-//Fields
+
     private GenerativeModelFutures model;
     private View pbLoading;
     private TextView tvAiResponse;
     private Button btnSuggestSteps;
-    private String topic;
-    private String aiResponse;
 
-    private Executor executor;
-    private FutureCallback<GenerateContentResponse> callback;
-    private Toast toast;
-    private ListenableFuture<GenerateContentResponse> response;
-    private GenerateContentResponse generateContentResponse;
-    private Content prompt;
-
-
+    /**
+     * Initializes the activity, sets up the Gemini model, and UI listeners.
+     * <p>
+     * يقوم بتهيئة النشاط، وإعداد نموذج Gemini، ومستمعي واجهة المستخدم.
+     *
+     * @param savedInstanceState Saved state. الحالة المحفوظة.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,23 +56,15 @@ public class GeminiActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize the Gemini Developer API backend service
-        // Create a `GenerativeModel` instance with a model that supports your use case
         GenerativeModel geminiModel = FirebaseAI.getInstance(GenerativeBackend.googleAI())
                 .generativeModel("gemini-2.5-flash-lite");
 
-
-        // Use the GenerativeModelFutures Java compatibility layer which offers
-        // support for ListenableFuture and Publisher APIs
         model = GenerativeModelFutures.from(geminiModel);
         
-        // Find views
         pbLoading = findViewById(R.id.pbLoading);
         tvAiResponse = findViewById(R.id.tvAiResponse);
         btnSuggestSteps = findViewById(R.id.btnSuggestSteps);
         
-        // Note: The logic to trigger askFirebaseAiGeminiForSteps from btnSuggestSteps is missing here.
-        // I'll add a simple listener for demonstration if the views exist.
         if (btnSuggestSteps != null) {
             btnSuggestSteps.setOnClickListener(v -> {
                 android.widget.EditText etTaskTopic = findViewById(R.id.etTaskTopic);
@@ -83,22 +79,23 @@ public class GeminiActivity extends AppCompatActivity {
     }
 
     /**
-     * @param topic the topic to ask Gemini about
+     * Sends a prompt to the Gemini model and displays the response.
+     * <p>
+     * يرسل طلباً إلى نموذج Gemini ويعرض الرد.
+     *
+     * @param topic The spending topic to ask about. موضوع الإنفاق للاستفسار عنه.
      */
     private void askFirebaseAiGeminiForSteps(String topic) {
             if (pbLoading != null) pbLoading.setVisibility(View.VISIBLE);
             if (tvAiResponse != null) tvAiResponse.setText("");
             if (btnSuggestSteps != null) btnSuggestSteps.setEnabled(false);
 
-
             String promptStr = "i am using a money management app. i just spent money on: '" + topic + "'. " +
                     "as a financial advisor, can you give me 3 quick professional tips to manage my budget better for this specific item and tell me if this is usually considered a 'need' or a 'want' or a 'saving' or a 'spending';";
-
 
             Content promptContent = new Content.Builder()
                     .addText(promptStr)
                     .build();
-
 
             ListenableFuture<GenerateContentResponse> responseFuture = model.generateContent(promptContent);
             Executor mainExecutor = this::runOnUiThread;
@@ -109,7 +106,6 @@ public class GeminiActivity extends AppCompatActivity {
                     if (btnSuggestSteps != null) btnSuggestSteps.setEnabled(true);
                     if (tvAiResponse != null) tvAiResponse.setText(result.getText());
                 }
-
 
                 @Override
                 public void onFailure(Throwable t) {

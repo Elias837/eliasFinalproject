@@ -23,27 +23,25 @@ import soraka.ash.eliasfinalproject.models.FinancialGoal;
 /**
  * RecyclerView adapter for displaying financial goals in a list.
  * Manages the data binding between the goal objects and the card views.
- *
+ * <p>
  * محول (Adapter) للعرض التدويري لعرض الأهداف المالية في قائمة.
  * يدير ربط البيانات بين كائنات الأهداف وعروض البطاقات.
  */
 public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetViewHolder> {
-    /** The list of financial goals to display. */
-    /** قائمة الأهداف المالية للعرض. */
+    
+    /** The list of financial goals to display. قائمة الأهداف المالية للعرض. */
     private List<FinancialGoal> budgetItems;
     
-    /** Context used for layout inflation and navigation. */
-    /** السياق المستخدم لإنشاء التخطيط والتنقل. */
+    /** Context used for layout inflation and navigation. السياق المستخدم لإنشاء التخطيط والتنقل. */
     private Context context;
 
     /**
      * Initializes the adapter with context and a data list.
-     * @param context The context of the calling activity.
-     * @param budgetItems The initial list of goals.
-     *
+     * <p>
      * يقوم بتهيئة المحول بالسياق وقائمة البيانات.
-     * @param context سياق النشاط المستدعي.
-     * @param budgetItems القائمة الأولية للأهداف.
+     *
+     * @param context The context of the calling activity. سياق النشاط المستدعي.
+     * @param budgetItems The initial list of goals. القائمة الأولية للأهداف.
      */
     public BudgetAdapter(Context context, List<FinancialGoal> budgetItems) {
         this.context = context;
@@ -52,10 +50,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Creates a new ViewHolder by inflating the item_goal layout.
-     * @param parent The ViewGroup into which the new View will be added.
-     * @param viewType The view type of the new View.
-     * @return A new BudgetViewHolder.
-     *
+     * <p>
      * ينشئ ViewHolder جديداً عن طريق إنشاء تخطيط item_goal.
      */
     @NonNull
@@ -68,9 +63,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Binds data to the ViewHolder and sets click listeners for editing.
-     * @param holder The ViewHolder to update.
-     * @param position The position of the item in the list.
-     *
+     * <p>
      * يربط البيانات بـ ViewHolder ويضبط مستمعي النقر للتعديل.
      */
     @Override
@@ -89,8 +82,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Returns the total number of items in the list.
-     * @return The size of budgetItems.
-     *
+     * <p>
      * يعيد العدد الإجمالي للعناصر في القائمة.
      */
     @Override
@@ -100,9 +92,10 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Replaces the current data with a new list and refreshes the UI.
-     * @param newItems The new list of financial goals.
-     *
+     * <p>
      * يستبدل البيانات الحالية بقائمة جديدة ويحدث واجهة المستخدم.
+     *
+     * @param newItems The new list of financial goals. القائمة الجديدة للأهداف.
      */
     public void updateBudgetItems(List<FinancialGoal> newItems) {
         this.budgetItems = newItems;
@@ -111,7 +104,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
     /**
      * Inner class representing the visual layout for a single goal item.
-     *
+     * <p>
      * فئة داخلية تمثل التخطيط المرئي لعنصر هدف واحد.
      */
     static class BudgetViewHolder extends RecyclerView.ViewHolder {
@@ -124,9 +117,10 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
         /**
          * Finds UI elements within the item view.
-         * @param itemView The root view of the item layout.
-         *
+         * <p>
          * يبحث عن عناصر واجهة المستخدم داخل عرض العنصر.
+         *
+         * @param itemView The root view of the item layout. عرض العنصر.
          */
         public BudgetViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -140,9 +134,10 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
 
         /**
          * Fills the view components with data from a FinancialGoal object.
-         * @param item The goal data to display.
-         *
+         * <p>
          * يملأ مكونات العرض بالبيانات من كائن FinancialGoal.
+         *
+         * @param item The goal data to display. بيانات الهدف.
          */
         public void bind(FinancialGoal item) {
             goalName.setText(item.getGoalName());

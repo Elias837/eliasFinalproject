@@ -22,9 +22,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.ai.FirebaseAI;
-import com.google.firebase.ai.java.GenerativeModelFutures;
-import com.google.firebase.ai.type.GenerativeBackend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,26 +29,31 @@ import java.util.List;
 /**
  * The main dashboard activity of the application.
  * Serves as the central navigation hub to different financial tools and settings.
- *
+ * <p>
  * نشاط اللوحة الرئيسية للتطبيق.
  * يعمل كمركز تنقل رئيسي لمختلف الأدوات المالية والإعدادات.
  */
 public class MainActivity extends AppCompatActivity {
 
-    /** TextView to display the personalized greeting. */
-    /** نص لعرض الترحيب الشخصي. */
+    /** 
+     * TextView to display the personalized greeting to the user.
+     * نص لعرض الترحيب الشخصي للمستخدم.
+     */
     private TextView welcomeText;
 
-    /** Request code for permissions. */
-    /** رمز طلب الأذونات. */
+    /** 
+     * Request code used for handling multiple application permissions.
+     * رمز الطلب المستخدم للتعامل مع أذونات التطبيق المتعددة.
+     */
     private static final int PERMISSION_REQUEST_CODE = 123;
 
     /**
-     * Initializes the dashboard, sets up navigation cards and requests permissions.
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     * Called when the activity is starting. Initializes the UI and navigation.
+     * <p>
+     * تُستدعى عند بدء النشاط. تقوم بتهيئة واجهة المستخدم والتنقل.
      *
-     * يقوم بتهيئة لوحة التحكم، وإعداد بطاقات التنقل وطلب الأذونات.
-     * @param savedInstanceState إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
+     *                           إذا تم إعادة تهيئة النشاط بعد إغلاقه سابقاً.
      */
     @SuppressLint("MissingInflatedId")
     @Override
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView btnStatistics = findViewById(R.id.btnStatistics);
         ImageButton btnSettings = findViewById(R.id.btnSettings);
 
+        // Setting up navigation listeners
         if (btnAcc != null) {
             btnAcc.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, budgetSummary.class)));
         }
@@ -106,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Fetches the user's name from SharedPreferences and updates the greeting text.
-     * Defaults to "User" if no name is found.
-     *
+     * If no name is found, it defaults to "User".
+     * <p>
      * يجلب اسم المستخدم من SharedPreferences ويحدث نص الترحيب.
-     * القيمة الافتراضية هي "User" إذا لم يتم العثور على اسم.
+     * في حال عدم العثور على اسم، يتم استخدام "User" كقيمة افتراضية.
      */
     private void updateGreeting() {
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
@@ -120,9 +123,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks and requests necessary application permissions (Camera, Media, Notifications).
-     *
-     * يتحقق ويطلب أذونات التطبيق الضرورية (الكاميرا، الوسائط، الإشعارات).
+     * Checks and requests necessary application permissions such as Camera, Storage, and Notifications.
+     * Handles differences between Android versions.
+     * <p>
+     * يتحقق ويطلب أذونات التطبيق الضرورية مثل الكاميرا، التخزين، والإشعارات.
+     * يتعامل مع الاختلافات بين إصدارات الأندرويد.
      */
     private void requestAppPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -149,15 +154,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Callback for the result from requesting permissions.
-     * @param requestCode The request code passed in requestPermissions.
-     * @param permissions The requested permissions.
-     * @param grantResults The grant results for the corresponding permissions.
+     * Callback method for the result from requesting permissions.
+     * Displays a toast if all requested permissions are granted.
+     * <p>
+     * طريقة استدعاء لنتيجة طلب الأذونات.
+     * تعرض رسالة (Toast) إذا تم منح جميع الأذونات المطلوبة.
      *
-     * استدعاء لنتيجة طلب الأذونات.
-     * @param requestCode رمز الطلب الذي تم تمريره في requestPermissions.
-     * @param permissions الأذونات المطلوبة.
-     * @param grantResults نتائج المنح للأذونات المقابلة.
+     * @param requestCode The request code passed in requestPermissions. رمز الطلب الممرر.
+     * @param permissions The requested permissions. الأذونات المطلوبة.
+     * @param grantResults The grant results for the corresponding permissions. نتائج المنح.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

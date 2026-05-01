@@ -10,8 +10,23 @@ import androidx.annotation.Nullable;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Service that handles background synchronization of income data to Firebase.
+ * <p>
+ * خدمة تتعامل مع مزامنة بيانات الدخل في الخلفية مع Firebase.
+ */
 public class MyIncomeService extends Service {
 
+    /**
+     * Called when the service is started. Retrieves the income data from the intent.
+     * <p>
+     * تُستدعى عند بدء الخدمة. تستخرج بيانات الدخل من الرسالة (intent).
+     *
+     * @param intent The intent containing the task data. الرسالة التي تحتوي على بيانات المهمة.
+     * @param flags Additional data about this start request. بيانات إضافية حول طلب البدء.
+     * @param startId A unique integer representing this specific request to start. معرف فريد لهذا الطلب.
+     * @return The starting mode. وضع البدء.
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Read the data received within the intent
@@ -25,13 +40,17 @@ public class MyIncomeService extends Service {
         return START_NOT_STICKY;
     }
 
+    /**
+     * Saves the provided income data to Firebase Realtime Database.
+     * <p>
+     * يحفظ بيانات الدخل المقدمة في قاعدة بيانات Firebase Realtime.
+     *
+     * @param income The income record to save. سجل الدخل المراد حفظه.
+     */
     private void saveMyTaskToFirebase(MyIncome income) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("tasks");
         String key = myRef.push().getKey();
         
-        // Removed MyIncome.setUsersId(key) because it's not a static method 
-        // and 'setUsersId' does not exist in your MyIncome model.
-
         if (key != null) {
             myRef.child(key).setValue(income).addOnCompleteListener(fbTask -> {
                 if (fbTask.isSuccessful()) {
@@ -45,6 +64,14 @@ public class MyIncomeService extends Service {
         }
     }
 
+    /**
+     * Required method for bound services. Not used here.
+     * <p>
+     * طريقة مطلوبة للخدمات المرتبطة. لا تستخدم هنا.
+     *
+     * @param intent The intent used to bind. الرسالة المستخدمة للارتباط.
+     * @return null.
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

@@ -2,6 +2,8 @@ package soraka.ash.eliasfinalproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,13 +44,13 @@ public class goalsAbudgeting extends AppCompatActivity {
 
     /** 
      * RecyclerView to display the list of financial goals.
-     * عرض تدويري (RecyclerView) لعرض قائمة الأهداف المالية.
+     * عرض تדוيري (RecyclerView) لعرض قائمة الأهداف المالية.
      */
     private RecyclerView goalsRecyclerView;
 
     /** 
      * Adapter for the goals RecyclerView to bind goal data to views.
-     * محول (Adapter) للعرض التدويري لربط بيانات الأهداف بالواجهات.
+     * محول (Adapter) للعرض التדוيري لربط بيانات الأهداف بالواجهات.
      */
     private BudgetAdapter budgetAdapter;
 
@@ -64,9 +67,15 @@ public class goalsAbudgeting extends AppCompatActivity {
     private MaterialToolbar toolbar;
 
     /**
+     * Search bar input field.
+     * حقل إدخال شريط البحث.
+     */
+    private TextInputEditText etSearch;
+
+    /**
      * Initializes the activity, sets up the toolbar, RecyclerView, and Floating Action Button.
      * <p>
-     * يقوم بتهيئة النشاط، وإعداد شريط الأدوات، والعرض التدويري، والزر العائم.
+     * يقوم بتهيئة النشاط، وإعداد شريط الأدوات، والعرض التדוيري، والزر العائم.
      *
      * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
      *                           إذا تمت إعادة تهيئة النشاط بعد إغلاقه سابقاً.
@@ -84,6 +93,7 @@ public class goalsAbudgeting extends AppCompatActivity {
 
         addGoalFab = findViewById(R.id.addGoalFab);
         goalsRecyclerView = findViewById(R.id.goalsRecyclerView);
+        etSearch = findViewById(R.id.etSearch);
 
         budgetItemList = new ArrayList<>();
         budgetAdapter = new BudgetAdapter(this, budgetItemList);
@@ -102,7 +112,47 @@ public class goalsAbudgeting extends AppCompatActivity {
             });
         }
         
+        setupSearchListener();
         loadGoalsFromFirebase();
+    }
+
+    /**
+     * Sets up a listener for the search bar to filter the goals list.
+     * <p>
+     * يضبط مستمعاً لشريط البحث لتصفية قائمة الأهداف.
+     */
+    private void setupSearchListener() {
+        if (etSearch != null) {
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    filterGoals(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
+    }
+
+    /**
+     * Filters the goals list based on the query string.
+     * <p>
+     * يصفي قائمة الأهداف بناءً على سلسلة الاستعلام.
+     *
+     * @param query The search query. استعلام البحث.
+     */
+    private void filterGoals(String query) {
+        List<FinancialGoal> filteredList = new ArrayList<>();
+        for (FinancialGoal goal : budgetItemList) {
+            if (goal.getGoalName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(goal);
+            }
+        }
+        budgetAdapter.updateBudgetItems(filteredList);
     }
 
     /**
@@ -138,7 +188,13 @@ public class goalsAbudgeting extends AppCompatActivity {
                 } else {
                     Log.d("goalsAbudgeting", "No goals found in database for user: " + userId);
                 }
-                budgetAdapter.updateBudgetItems(new ArrayList<>(budgetItemList));
+                
+                // If there's search text, apply the filter after loading
+                if (etSearch != null && etSearch.getText() != null && !etSearch.getText().toString().isEmpty()) {
+                    filterGoals(etSearch.getText().toString());
+                } else {
+                    budgetAdapter.updateBudgetItems(new ArrayList<>(budgetItemList));
+                }
             }
 
             @Override

@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity {
      * يقوم بالتحقق من صحة أوراق الاعتماد ويبدأ تسجيل الدخول مع Firebase.
      * يعيد التوجيه إلى اللوحة الرئيسية عند نجاح المصادقة.
      */
-    private void attemptLogin() {
+   private void attemptLogin()  {
         if (emailEditText == null || passwordEditText == null) return;
 
         String email = emailEditText.getText().toString().trim();

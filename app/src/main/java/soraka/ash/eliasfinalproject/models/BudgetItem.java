@@ -1,4 +1,4 @@
-package soraka.ash.eliasfinalproject.model;
+package soraka.ash.eliasfinalproject.models;
 
 /**
  * Model class representing a budget category item with progress tracking.
@@ -9,6 +9,8 @@ package soraka.ash.eliasfinalproject.model;
  * تغلف بيانات الميزانية بما في ذلك اسم الفئة والمبلغ المنفق حالياً،
  * المبلغ الإجمالي للميزانية، ونسبة التقدم المحسوبة.
  */
+@SuppressWarnings("unused")
+
 public class BudgetItem {
     private String category;
     private double currentAmount;

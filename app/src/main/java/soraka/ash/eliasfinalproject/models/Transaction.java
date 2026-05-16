@@ -1,4 +1,5 @@
 package soraka.ash.eliasfinalproject.models;
+@SuppressWarnings("unused")
 
 /**
  * Transaction model class for Firebase Realtime Database.

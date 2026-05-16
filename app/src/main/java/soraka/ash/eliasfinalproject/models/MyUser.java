@@ -1,4 +1,5 @@
 package soraka.ash.eliasfinalproject.models;
+@SuppressWarnings("unused")
 
 /**
  * User model class for Firebase Realtime Database.

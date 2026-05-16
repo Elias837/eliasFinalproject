@@ -1,7 +1,7 @@
 package soraka.ash.eliasfinalproject.data;
 
 /**
- * Interface for handling asynchronous responses from external services (like Gemini AI).
+ * هي عبارة عن interface (واجهة برمجية). وظيفتها أن تعمل كـ "جهاز لاسلكي" أو "نظام تنبيه" بين الكلاس الذي يجلب البيانات (مثل GeminiHelper) وبين الشاشة التي تعرض البيانات (مثل GeminiActivity).
  * <p>
  * واجهة للتعامل مع الاستجابات غير المتزامنة من الخدمات الخارجية (مثل ذكاء Gemini الاصطناعي).
  */

@@ -117,10 +117,8 @@ public class MyIncome {
 
     /** @return Transaction date. تاريخ العملية. */
     public long getDate() { return date; }
-
     /** @return Payment method. طريقة الدفع. */
     public String getPaymentMethod() { return paymentMethod; }
-
     /** @return Transaction counterpart. الجهة المقابلة. */
     public String getCounterpart() { return counterpart; }
 
@@ -170,7 +168,6 @@ public class MyIncome {
 
     /** @param completed Sets completion flag. تعيين حالة الإكمال. */
     public void setCompleted(boolean completed) { isCompleted = completed; }
-
     /** @param categoryId Sets category ID. تعيين رقم التصنيف. */
     public void setCategoryId(long categoryId) { this.categoryId = categoryId; }
 

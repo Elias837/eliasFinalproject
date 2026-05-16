@@ -1,4 +1,4 @@
-package soraka.ash.eliasfinalproject.data.MyIncomeTable;
+package soraka.ash.eliasfinalproject.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import soraka.ash.eliasfinalproject.R;
+import soraka.ash.eliasfinalproject.data.MyIncomeTable.MyIncome;
 
 /**
  * ArrayAdapter for displaying income/expense items in a list or spinner.

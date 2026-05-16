@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+@SuppressWarnings({"unused", "UnusedReturnValue"}) // إخفاء التنبيهات لجعل اللون طبيعياً ونشطاً
+
 
 /**
  * Custom Adapter for displaying financial goals in a RecyclerView.

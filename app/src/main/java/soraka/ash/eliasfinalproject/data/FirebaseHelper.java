@@ -22,16 +22,18 @@ import soraka.ash.eliasfinalproject.models.Transaction;
  * Firebase helper class for managing financial data operations.
  * Provides methods for CRUD operations on financial goals and transactions.
  * <p>
- * كلاس مساعد لـ Firebase لإدارة عمليات البيانات المالية.
- * يوفر طرقاً لعمليات الإضافة والقراءة والتعديل والحذف للأهداف المالية والمعاملات.
+ * هذا الكلاس هو "الوسيط" بين تطبيقك وبين خوادم شركة جوجل (Firebase). وظيفته الأساسية هي تنظيم عملية تخزين وجلب البيانات من الإنترنت.
  */
 public class FirebaseHelper {
     public static final String TAG = "FirebaseHelper";
     public static final String USERS_NODE = "users";
     public static final String GOALS_NODE = "goals";
     public static final String TRANSACTIONS_NODE = "transactions";
-    
+
+//    DATABASE_REFERENCE: هو "العنوان" أو "الرابط" الذي يوجه البيانات إلى المسار الصحيح في قاعدة البيانات (مثل مسار المستخدمين أو المصاريف).
     public static DatabaseReference database;
+
+//    */FirebaseAuth: هو النظام المسؤول عن الأمان. يتأكد أن الشخص الذي يحاول حفظ البيانات هو صاحب الحساب الفعلي.
     public static FirebaseAuth mAuth;
 
     /**
@@ -51,6 +53,7 @@ public class FirebaseHelper {
      *
      * @param transactions Node name. اسم العقدة.
      * @param valueEventListener Listener for data changes. مستمع لتغير البيانات.
+     *                           المزامنة الحية: ميزة الفايربيس الأساسية هي أنه يعمل بنظام "المراقب" (Listener). عندما يتغير أي رقم في السحابة، يقوم هذا الكلاس بإبلاغ التطبيق فوراً لتحديث الشاشة دون تدخل المستخدم.
      */
     public void get(String transactions, ValueEventListener valueEventListener) {
     }

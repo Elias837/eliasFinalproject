@@ -65,12 +65,18 @@ public class MyIncomeService extends Service {
     }
 
     /**
-     * Required method for bound services. Not used here.
+     * [Required implementation for Service class]
+     * This method is mandatory for any Android Service. However, since we are using 
+     * a "Started Service" for background sync, we return null to tell Android that 
+     * this service does not support binding with an Activity (No continuous two-way communication).
      * <p>
-     * طريقة مطلوبة للخدمات المرتبطة. لا تستخدم هنا.
+     * [توثيق إلزامي لفئة الخدمة]
+     * هذه الدالة إجبارية في أي خدمة أندرويد. بما أننا نستخدم "Started Service" 
+     * للمزامنة في الخلفية، فإننا نرجع null لإخبار النظام أن هذه الخدمة لا تدعم 
+     * "الارتباط" (Binding) بالشاشة، بل تعمل بشكل مستقل لتنفيذ مهمة واحدة فقط.
      *
      * @param intent The intent used to bind. الرسالة المستخدمة للارتباط.
-     * @return null.
+     * @return null (because we are not using a Bound Service).
      */
     @Nullable
     @Override

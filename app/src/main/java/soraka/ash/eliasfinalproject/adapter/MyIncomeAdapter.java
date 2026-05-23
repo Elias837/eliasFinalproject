@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 
 import soraka.ash.eliasfinalproject.R;
 import soraka.ash.eliasfinalproject.data.MyIncomeTable.MyIncome;
+@SuppressWarnings({"unused", "UnusedReturnValue"}) // إخفاء التنبيهات لجعل اللون طبيعياً ونشطاً
+
 
 /**
  * ArrayAdapter for displaying income/expense items in a list or spinner.

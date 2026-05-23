@@ -4,84 +4,77 @@ package soraka.ash.eliasfinalproject.models;
  * Model class representing a budget category item with progress tracking.
  * Encapsulates budget data including category name, current amount spent,
  * total budget amount, and calculated progress percentage.
- * 
+ * <p>
  * فئة نموذجية تمثل عنصر فئة الميزانية مع تتبع التقدم.
  * تغلف بيانات الميزانية بما في ذلك اسم الفئة والمبلغ المنفق حالياً،
  * المبلغ الإجمالي للميزانية، ونسبة التقدم المحسوبة.
  */
 @SuppressWarnings("unused")
-
 public class BudgetItem {
     private String category;
     private double currentAmount;
     private double totalAmount;
     private int progress;
 
-    // Default constructor required by Firebase
+    /** Default constructor required by Firebase. المنشئ الافتراضي المطلوب بواسطة Firebase. */
     public BudgetItem() {
     }
 
+    /**
+     * Constructs a new BudgetItem and calculates progress.
+     * @param category The category name. اسم الفئة.
+     * @param currentAmount Amount spent. المبلغ المنفق.
+     * @param totalAmount Total budget. الميزانية الإجمالية.
+     */
     public BudgetItem(String category, double currentAmount, double totalAmount) {
         this.category = category;
         this.currentAmount = currentAmount;
         this.totalAmount = totalAmount;
-        this.progress = (int) ((currentAmount / totalAmount) * 100);
+        if (totalAmount > 0) {
+            this.progress = (int) ((currentAmount / totalAmount) * 100);
+        } else {
+            this.progress = 0;
+        }
     }
 
-    // Getters and setters
     /**
-     * Returns the budget category name.
-     * @return The category name as a String
-     * 
-     * يرجع اسم فئة الميزانية.
-     * @return اسم الفئة كـ String
+     * @return The category name as a String. اسم الفئة كـ String.
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     * Returns the current amount spent.
-     * @return The current amount as a double
-     * 
-     * يرجع المبلغ المنفق حالياً.
-     * @return المبلغ الحالي كـ double
+     * @return The current amount as a double. المبلغ الحالي كـ double.
      */
     public double getCurrentAmount() {
         return currentAmount;
     }
 
     /**
-     * Returns the total budget amount.
-     * @return The total amount as a double
-     * 
-     * يرجع المبلغ الإجمالي للميزانية.
-     * @return المبلغ الإجمالي كـ double
+     * @return The total amount as a double. المبلغ الإجمالي كـ double.
      */
     public double getTotalAmount() {
         return totalAmount;
     }
 
     /**
-     * Returns the progress percentage (0-100).
-     * @return The progress percentage as an integer
-     * 
-     * يرجع نسبة التقدم (0-100).
-     * @return نسبة التقدم كـ integer
+     * @return The progress percentage as an integer. نسبة التقدم كـ integer.
      */
     public int getProgress() {
         return progress;
     }
 
     /**
-     * Updates the current amount spent and recalculates the progress percentage.
-     * @param amount The new current amount to set
-     * 
-     * يحدث المبلغ المنفق حالياً ويعيد حساب نسبة التقدم.
-     * @param amount المبلغ الحالي الجديد للتعيين
+     * Updates the current amount and recalculates progress.
+     * @param amount The new current amount. المبلغ الحالي الجديد.
      */
     public void setCurrentAmount(double amount) {
         this.currentAmount = amount;
-        this.progress = (int) ((currentAmount / totalAmount) * 100);
+        if (totalAmount > 0) {
+            this.progress = (int) ((currentAmount / totalAmount) * 100);
+        } else {
+            this.progress = 0;
+        }
     }
 }

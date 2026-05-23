@@ -3,8 +3,14 @@ package soraka.ash.eliasfinalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,97 +36,141 @@ import soraka.ash.eliasfinalproject.models.FinancialGoal;
 
 /**
  * Activity for managing financial goals and budgeting.
- * Displays a list of financial goals retrieved from Firebase and allows adding new goals.
- * <p>
- * نشاط لإدارة الأهداف المالية والميزانية.
- * يعرض قائمة بالأهداف المالية المسترجعة من Firebase ويسمح بإضافة أهداف جديدة.
+ * Displays a list of financial goals and allows adding new ones or performing quick deposits.
  */
 public class goalsAbudgeting extends AppCompatActivity {
-    /** 
-     * Floating Action Button to navigate to the Add Goal screen.
-     * زر عائم للانتقال إلى شاشة إضافة هدف.
-     */
     private FloatingActionButton addGoalFab;
-
-    /** 
-     * RecyclerView to display the list of financial goals.
-     * عرض تדוيري (RecyclerView) لعرض قائمة الأهداف المالية.
-     */
     private RecyclerView goalsRecyclerView;
-
-    /** 
-     * Adapter for the goals RecyclerView to bind goal data to views.
-     * محول (Adapter) للعرض التדוيري لربط بيانات الأهداف بالواجهات.
-     */
     private BudgetAdapter budgetAdapter;
-
-    /** 
-     * List containing the financial goals to be displayed in the UI.
-     * قائمة تحتوي على الأهداف المالية التي سيتم عرضها في واجهة المستخدم.
-     */
     private List<FinancialGoal> budgetItemList;
-
-    /** 
-     * Material design toolbar for the activity's header.
-     * شريط أدوات (Toolbar) بتصميم Material لرأس النشاط.
-     */
     private MaterialToolbar toolbar;
-
-    /**
-     * Search bar input field.
-     * حقل إدخال شريط البحث.
-     */
     private TextInputEditText etSearch;
 
-    /**
-     * Initializes the activity, sets up the toolbar, RecyclerView, and Floating Action Button.
-     * <p>
-     * يقوم بتهيئة النشاط، وإعداد شريط الأدوات، والعرض التדוيري، والزر العائم.
-     *
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down.
-     *                           إذا تمت إعادة تهيئة النشاط بعد إغلاقه سابقاً.
-     */
+    // Quick Deposit Views
+    private Spinner spinnerGoalSelect;
+    private EditText etDepositAmount;
+    private Button btnDeposit;
+    private List<String> goalNamesList;
+    private ArrayAdapter<String> spinnerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals_budgeting);
 
+        initViews();
+        setupToolbar();
+        setupRecyclerView();
+        setupFab();
+        setupSearchListener();
+        setupQuickDeposit();
+        loadGoalsFromFirebase();
+    }
+
+    private void initViews() {
         toolbar = findViewById(R.id.toolbar);
+        addGoalFab = findViewById(R.id.addGoalFab);
+        goalsRecyclerView = findViewById(R.id.goalsRecyclerView);
+        etSearch = findViewById(R.id.etSearch);
+        spinnerGoalSelect = findViewById(R.id.spinnerGoalSelect);
+        etDepositAmount = findViewById(R.id.etDepositAmount);
+        btnDeposit = findViewById(R.id.btnDeposit);
+    }
+
+    private void setupToolbar() {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(v -> finish());
         }
+    }
 
-        addGoalFab = findViewById(R.id.addGoalFab);
-        goalsRecyclerView = findViewById(R.id.goalsRecyclerView);
-        etSearch = findViewById(R.id.etSearch);
-
+    private void setupRecyclerView() {
         budgetItemList = new ArrayList<>();
         budgetAdapter = new BudgetAdapter(this, budgetItemList);
-        
         if (goalsRecyclerView != null) {
             goalsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             goalsRecyclerView.setAdapter(budgetAdapter);
-            // Disable nested scrolling for smoother interaction inside a ScrollView
             goalsRecyclerView.setNestedScrollingEnabled(false);
         }
+    }
 
+    private void setupFab() {
         if (addGoalFab != null) {
             addGoalFab.setOnClickListener(v -> {
                 Intent intent = new Intent(goalsAbudgeting.this, AddGoal2Activity.class);
                 startActivity(intent);
             });
         }
-        
-        setupSearchListener();
-        loadGoalsFromFirebase();
+    }
+
+    private void setupQuickDeposit() {
+        goalNamesList = new ArrayList<>();
+        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, goalNamesList);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if (spinnerGoalSelect != null) {
+            spinnerGoalSelect.setAdapter(spinnerAdapter);
+        }
+
+        if (btnDeposit != null) {
+            btnDeposit.setOnClickListener(v -> handleQuickDeposit());
+        }
     }
 
     /**
-     * Sets up a listener for the search bar to filter the goals list.
-     * <p>
-     * يضبط مستمعاً لشريط البحث لتصفية قائمة الأهداف.
+     * Handles the logic for adding an amount to the selected financial goal.
      */
+    private void handleQuickDeposit() {
+        if (spinnerGoalSelect == null || spinnerGoalSelect.getSelectedItem() == null) {
+            Toast.makeText(this, "Please select a goal", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String amountStr = etDepositAmount.getText().toString();
+        if (TextUtils.isEmpty(amountStr)) {
+            etDepositAmount.setError("Required");
+            return;
+        }
+
+        try {
+            double amount = Double.parseDouble(amountStr);
+            int selectedIndex = spinnerGoalSelect.getSelectedItemPosition();
+            
+            // Check if list is not empty and index is valid
+            if (budgetItemList != null && !budgetItemList.isEmpty() && selectedIndex < budgetItemList.size()) {
+                FinancialGoal selectedGoal = budgetItemList.get(selectedIndex);
+                
+                // CORRECT METHOD CALL: Use addProgress instead of getProgressPercentage
+                selectedGoal.addProgress(amount);
+                
+                // Save to Firebase
+                saveGoalProgress(selectedGoal);
+            }
+        } catch (NumberFormatException e) {
+            etDepositAmount.setError("Invalid amount");
+        }
+    }
+
+    private void saveGoalProgress(FinancialGoal goal) {
+        String userId = FirebaseAuth.getInstance().getUid();
+        if (userId == null) return;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child(FirebaseHelper.USERS_NODE)
+                .child(userId)
+                .child(FirebaseHelper.GOALS_NODE)
+                .child(goal.getGoalId());
+
+        ref.setValue(goal).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(goalsAbudgeting.this, "Deposit successful!", Toast.LENGTH_SHORT).show();
+                etDepositAmount.setText("");
+                // The RecyclerView will update automatically because of the ValueEventListener in loadGoalsFromFirebase()
+            } else {
+                Toast.makeText(goalsAbudgeting.this, "Failed to update", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setupSearchListener() {
         if (etSearch != null) {
             etSearch.addTextChangedListener(new TextWatcher() {
@@ -138,13 +188,6 @@ public class goalsAbudgeting extends AppCompatActivity {
         }
     }
 
-    /**
-     * Filters the goals list based on the query string.
-     * <p>
-     * يصفي قائمة الأهداف بناءً على سلسلة الاستعلام.
-     *
-     * @param query The search query. استعلام البحث.
-     */
     private void filterGoals(String query) {
         List<FinancialGoal> filteredList = new ArrayList<>();
         for (FinancialGoal goal : budgetItemList) {
@@ -155,19 +198,9 @@ public class goalsAbudgeting extends AppCompatActivity {
         budgetAdapter.updateBudgetItems(filteredList);
     }
 
-    /**
-     * Loads the current user's financial goals from Firebase Realtime Database.
-     * Listens for real-time updates and refreshes the adapter data whenever data changes.
-     * <p>
-     * يحمل الأهداف المالية للمستخدم الحالي من قاعدة بيانات Firebase Realtime.
-     * يستمع للتحديثات في الوقت الفعلي ويحدث بيانات المحول كلما تغيرت البيانات.
-     */
     private void loadGoalsFromFirebase() {
         String userId = FirebaseAuth.getInstance().getUid();
-        if (userId == null) {
-            Log.e("goalsAbudgeting", "User ID is null");
-            return;
-        }
+        if (userId == null) return;
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child(FirebaseHelper.USERS_NODE)
@@ -178,18 +211,21 @@ public class goalsAbudgeting extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 budgetItemList.clear();
+                goalNamesList.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot goalSnapshot : snapshot.getChildren()) {
                         FinancialGoal goal = goalSnapshot.getValue(FinancialGoal.class);
                         if (goal != null) {
                             budgetItemList.add(goal);
+                            goalNamesList.add(goal.getGoalName());
                         }
                     }
-                } else {
-                    Log.d("goalsAbudgeting", "No goals found in database for user: " + userId);
                 }
                 
-                // If there's search text, apply the filter after loading
+                if (spinnerAdapter != null) {
+                    spinnerAdapter.notifyDataSetChanged();
+                }
+                
                 if (etSearch != null && etSearch.getText() != null && !etSearch.getText().toString().isEmpty()) {
                     filterGoals(etSearch.getText().toString());
                 } else {
@@ -204,11 +240,6 @@ public class goalsAbudgeting extends AppCompatActivity {
         });
     }
 
-    /**
-     * Refreshes the goal list from Firebase when the activity is resumed to ensure data consistency.
-     * <p>
-     * يحدث قائمة الأهداف من Firebase عند استئناف النشاط لضمان اتساق البيانات.
-     */
     @Override
     protected void onResume() {
         super.onResume();
